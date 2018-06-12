@@ -1,4 +1,4 @@
-# Lyber-ios-
+# Lyber-ios
 The ios app that does fare estimation, waiting time estimation, availability estimation between Lyft and Uber. 
 Co-authored by Edward Feng and Terrence Liu.
 The web version of this app can be found here: https://github.com/terrenceliu/Lyber
