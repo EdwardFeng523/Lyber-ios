@@ -12,9 +12,12 @@
 		877FC32F20CF67C500880906 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 877FC32D20CF67C500880906 /* Main.storyboard */; };
 		877FC33120CF67C600880906 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 877FC33020CF67C600880906 /* Assets.xcassets */; };
 		877FC33420CF67C600880906 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 877FC33220CF67C600880906 /* LaunchScreen.storyboard */; };
+		8790D64F20D0CF830033FDED /* GooglePlaces.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8790D64E20D0CF830033FDED /* GooglePlaces.framework */; };
+		EE1621F0CF276641642FD15C /* libPods-Lyber.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 12FE97C5654B74F534FD299F /* libPods-Lyber.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		12FE97C5654B74F534FD299F /* libPods-Lyber.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Lyber.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		877FC32620CF67C500880906 /* Lyber.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Lyber.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		877FC32920CF67C500880906 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		877FC32B20CF67C500880906 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -22,6 +25,9 @@
 		877FC33020CF67C600880906 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		877FC33320CF67C600880906 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		877FC33520CF67C600880906 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8790D64E20D0CF830033FDED /* GooglePlaces.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GooglePlaces.framework; sourceTree = "<group>"; };
+		8A726615DF8B8E450224C3AC /* Pods-Lyber.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Lyber.release.xcconfig"; path = "Pods/Target Support Files/Pods-Lyber/Pods-Lyber.release.xcconfig"; sourceTree = "<group>"; };
+		B21B1805D0D501C136D4AA69 /* Pods-Lyber.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Lyber.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Lyber/Pods-Lyber.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,17 +35,30 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8790D64F20D0CF830033FDED /* GooglePlaces.framework in Frameworks */,
+				EE1621F0CF276641642FD15C /* libPods-Lyber.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		55AA80C61C7E0D83A019E507 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				B21B1805D0D501C136D4AA69 /* Pods-Lyber.debug.xcconfig */,
+				8A726615DF8B8E450224C3AC /* Pods-Lyber.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		877FC31D20CF67C500880906 = {
 			isa = PBXGroup;
 			children = (
 				877FC32820CF67C500880906 /* Lyber */,
 				877FC32720CF67C500880906 /* Products */,
+				55AA80C61C7E0D83A019E507 /* Pods */,
+				D8FF6986814728EA778F9437 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -60,8 +79,17 @@
 				877FC33020CF67C600880906 /* Assets.xcassets */,
 				877FC33220CF67C600880906 /* LaunchScreen.storyboard */,
 				877FC33520CF67C600880906 /* Info.plist */,
+				8790D64E20D0CF830033FDED /* GooglePlaces.framework */,
 			);
 			path = Lyber;
+			sourceTree = "<group>";
+		};
+		D8FF6986814728EA778F9437 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				12FE97C5654B74F534FD299F /* libPods-Lyber.a */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -71,9 +99,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 877FC33820CF67C600880906 /* Build configuration list for PBXNativeTarget "Lyber" */;
 			buildPhases = (
+				A83E2F61D37CA90081E3EE51 /* [CP] Check Pods Manifest.lock */,
 				877FC32220CF67C500880906 /* Sources */,
 				877FC32320CF67C500880906 /* Frameworks */,
 				877FC32420CF67C500880906 /* Resources */,
+				CBF736F2B0740F2250282E18 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -129,6 +159,49 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		A83E2F61D37CA90081E3EE51 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Lyber-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CBF736F2B0740F2250282E18 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Lyber/Pods-Lyber-resources.sh",
+				"${PODS_ROOT}/GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle",
+				"${PODS_ROOT}/GooglePlacePicker/Frameworks/GooglePlacePicker.framework/Versions/A/Resources/GooglePlacePicker.bundle",
+				"${PODS_ROOT}/GooglePlaces/Frameworks/GooglePlaces.framework/Versions/A/Resources/GooglePlaces.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleMaps.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GooglePlacePicker.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GooglePlaces.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Lyber/Pods-Lyber-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		877FC32220CF67C500880906 /* Sources */ = {
@@ -278,10 +351,15 @@
 		};
 		877FC33920CF67C600880906 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B21B1805D0D501C136D4AA69 /* Pods-Lyber.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = ZWTD7QCCNV;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Lyber",
+				);
 				INFOPLIST_FILE = Lyber/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -296,10 +374,15 @@
 		};
 		877FC33A20CF67C600880906 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8A726615DF8B8E450224C3AC /* Pods-Lyber.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = ZWTD7QCCNV;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Lyber",
+				);
 				INFOPLIST_FILE = Lyber/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
