@@ -19,7 +19,15 @@ class ViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
-
+    
+    @IBOutlet weak var from: UITextField!
+    
+    @IBOutlet weak var to: UITextField!
+    
+    @IBAction func lyber(_ sender: Any) {
+    }
+    
+    @IBOutlet weak var display: UIScrollView!
+    
 }
 
