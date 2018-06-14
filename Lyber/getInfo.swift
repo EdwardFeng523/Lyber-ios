@@ -8,6 +8,6 @@
 
 import Foundation
 
-func sendRequest(longitude: String, latitude: String) {
+func sendRequest(depar_lat: String, depar_lng: String, dest_lat: String, dest_lng: String) {
     
 }
