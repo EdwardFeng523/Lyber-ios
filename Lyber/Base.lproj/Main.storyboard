@@ -50,7 +50,6 @@
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L89-NZ-Ynl">
                                 <rect key="frame" x="16" y="34" width="228" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
                                 <connections>
                                     <action selector="fromButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="EKL-Dr-eMM"/>
                                 </connections>
@@ -58,7 +57,6 @@
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qRB-7W-MDP">
                                 <rect key="frame" x="16" y="71" width="228" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
                                 <connections>
                                     <action selector="toButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="UM0-RW-w1x"/>
                                 </connections>

@@ -11,6 +11,13 @@ import GooglePlaces
 
 class ViewController: UIViewController {
 
+    var fromPressed: Bool = false
+    var toPressed: Bool = false
+    
+    var fromCoord: CLLocationCoordinate2D? = nil
+    
+    var toCoord: CLLocationCoordinate2D? = nil
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -23,24 +30,41 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var from: UITextField!
     @IBAction func fromButton(_ sender: Any) {
-        let autocompleteController = GMSAutocompleteViewController()
-        autocompleteController.delegate = self
+        let autocompleteControllerFrom = GMSAutocompleteViewController()
+        autocompleteControllerFrom.delegate = self
         
         // Set a filter to return only addresses.
         let addressFilter = GMSAutocompleteFilter()
         addressFilter.type = .address
-        autocompleteController.autocompleteFilter = addressFilter
+        autocompleteControllerFrom.autocompleteFilter = addressFilter
         
-        present(autocompleteController, animated: true, completion: nil)
+        fromPressed = true
+        present(autocompleteControllerFrom, animated: true, completion: nil)
     }
     
     @IBOutlet weak var to: UITextField!
     @IBAction func toButton(_ sender: Any) {
+        let autocompleteControllerTo = GMSAutocompleteViewController()
+        autocompleteControllerTo.delegate = self
         
+        // Set a filter to return only addresses.
+        let addressFilter = GMSAutocompleteFilter()
+        addressFilter.type = .address
+        autocompleteControllerTo.autocompleteFilter = addressFilter
+        
+        toPressed = true
+        present(autocompleteControllerTo, animated: true, completion: nil)
     }
     
     @IBAction func lyber(_ sender: Any) {
-        
+        if (fromCoord == nil || toCoord == nil) {
+            let alert = UIAlertController(title: "Error", message: "You must provide a source and a destination to use Lyber", preferredStyle: UIAlertControllerStyle.alert)
+            let action = UIAlertAction(title: "Got it", style: UIAlertActionStyle.default)
+            alert.addAction(action)
+            present(alert, animated: true, completion: nil)
+        } else {
+            
+        }
     }
     
     @IBOutlet weak var display: UIScrollView!
@@ -50,6 +74,15 @@ class ViewController: UIViewController {
 
 extension ViewController: GMSAutocompleteViewControllerDelegate {
     func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
+        if (fromPressed == true) {
+            from.text = place.name
+            fromCoord = place.coordinate
+        } else {
+            to.text = place.name
+            toCoord = place.coordinate
+        }
+        fromPressed = false
+        toPressed = false
         self.dismiss(animated: true, completion: nil)
     }
     
@@ -58,8 +91,9 @@ extension ViewController: GMSAutocompleteViewControllerDelegate {
     }
     
     func wasCancelled(_ viewController: GMSAutocompleteViewController) {
+        fromPressed = false
+        toPressed = false
         self.dismiss(animated: true, completion: nil)
-        UIApplication.shared.isNetworkActivityIndicatorVisible = true
     }
     
 
