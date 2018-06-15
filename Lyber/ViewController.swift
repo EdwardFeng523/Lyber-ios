@@ -9,6 +9,8 @@
 import UIKit
 import GooglePlaces
 
+
+
 class ViewController: UIViewController {
 
     var fromPressed: Bool = false
@@ -63,7 +65,7 @@ class ViewController: UIViewController {
             alert.addAction(action)
             present(alert, animated: true, completion: nil)
         } else {
-            
+            sendRequest(depar_lat: String(fromCoord!.latitude), depar_lng: String(fromCoord!.longitude), dest_lat: String(toCoord!.latitude), dest_lng: String(toCoord!.longitude))
         }
     }
     
