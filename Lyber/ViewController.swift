@@ -11,8 +11,8 @@ import GooglePlaces
 
 
 
-class ViewController: UIViewController {
-
+class ViewController: UIViewController
+{
     var fromPressed: Bool = false
     var toPressed: Bool = false
     
@@ -20,15 +20,24 @@ class ViewController: UIViewController {
     
     var toCoord: CLLocationCoordinate2D? = nil
     
+    var items: [LyberItem] = [] { didSet{
+        print ("items were set")
+        displayTable.reloadData()
+        } }
+    
+    @IBOutlet weak var displayTable: UITableView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        displayTable.delegate = self
+        displayTable.dataSource = self
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        print ("This would rather never happen but you did receive a memory warning!")
     }
+    
     
     @IBOutlet weak var from: UITextField!
     @IBAction func fromButton(_ sender: Any) {
@@ -65,11 +74,11 @@ class ViewController: UIViewController {
             alert.addAction(action)
             present(alert, animated: true, completion: nil)
         } else {
-            sendRequest(depar_lat: String(fromCoord!.latitude), depar_lng: String(fromCoord!.longitude), dest_lat: String(toCoord!.latitude), dest_lng: String(toCoord!.longitude))
+            self.items = sendRequest(depar_lat: String(fromCoord!.latitude), depar_lng: String(fromCoord!.longitude), dest_lat: String(toCoord!.latitude), dest_lng: String(toCoord!.longitude))
         }
     }
     
-    @IBOutlet weak var display: UIScrollView!
+
     
 }
 
@@ -97,6 +106,19 @@ extension ViewController: GMSAutocompleteViewControllerDelegate {
         toPressed = false
         self.dismiss(animated: true, completion: nil)
     }
-    
 
+}
+
+extension ViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return items.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = UITableViewCell(style: .default, reuseIdentifier: nil)
+        cell.textLabel?.text = items[indexPath.row].type
+        return cell
+    }
+    
+    
 }

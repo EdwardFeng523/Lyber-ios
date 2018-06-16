@@ -42,11 +42,6 @@
                                     <action selector="lyber:" destination="BYZ-38-t0r" eventType="touchUpInside" id="lgC-as-Rs2"/>
                                 </connections>
                             </button>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7VH-sc-O3Y">
-                                <rect key="frame" x="16" y="183" width="343" height="464"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.99360524056079425" green="1" blue="0.97583186113534193" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            </scrollView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L89-NZ-Ynl">
                                 <rect key="frame" x="16" y="34" width="228" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -61,12 +56,17 @@
                                     <action selector="toButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="UM0-RW-w1x"/>
                                 </connections>
                             </button>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Cq7-eO-BcK">
+                                <rect key="frame" x="16" y="181" width="343" height="466"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" red="0.87801128345828405" green="1" blue="0.97766509826829973" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
-                        <outlet property="display" destination="7VH-sc-O3Y" id="nud-Pj-kJJ"/>
+                        <outlet property="displayTable" destination="Cq7-eO-BcK" id="jCA-zU-CFt"/>
                         <outlet property="from" destination="O5M-1X-Hy5" id="zHh-Tm-GMC"/>
                         <outlet property="to" destination="pg2-Gw-oHc" id="pPQ-Mc-6uE"/>
                     </connections>
