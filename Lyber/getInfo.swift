@@ -53,51 +53,60 @@ struct LyberItem {
     let estimatedArrival: String
 }
 
-//func sendRequest(depar_lat: String, depar_lng: String, dest_lat: String, dest_lng: String) -> [LyberItem] {
-//    let jsonUrlStringUber = "https://lyber-server.herokuapp.com/api/uber?depar_lat=" + depar_lat + "&depar_lng=" + depar_lng + "&dest_lat=" + dest_lat + "&dest_lng=" + dest_lng
-//    let jsonUrlStringLyft = "https://lyber-server.herokuapp.com/api/lyft?depar_lat=" + depar_lat + "&depar_lng=" + depar_lng + "&dest_lat=" + dest_lat + "&dest_lng=" + dest_lng
-//    
-//    var uberFinished: Bool = false
-//    var lyftFinished: Bool = false
-//    
-//    guard let urlUber = URL(string: jsonUrlStringUber) else { return [] }
-//    guard let urlLyft = URL(string: jsonUrlStringLyft) else { return [] }
-//    var lst: [LyberItem] = []
-//    URLSession.shared.dataTask(with: urlUber) { (data, response, err) in
-//        guard let data = data else { return }
-//        do {
-//            let uberInfo = try JSONDecoder().decode(UberInfo.self, from: data)
-//            for elementUber in uberInfo.prices {
-//                let new_item = LyberItem(type: elementUber.display_name, description: "unavailable", priceRange: elementUber.estimate, high: Double(elementUber.high_estimate), low: Double(elementUber.low_estimate), distance: elementUber.distance, duration: elementUber.duration, estimatedArrival: "unavailable")
-//                lst.append(new_item)
-//            }
-//            print ("lst appended")
-//            print (uberInfo)
-//            uberFinished = true
-//        } catch let jsonErr {
-//            print("Error serializing json uber:", jsonErr)
-//        }
-//    }.resume()
-//    
-//    URLSession.shared.dataTask(with: urlLyft) { (data, response, err) in
-//        guard let lyftData = data else { return }
-//        do {
-//            let lyftInfo = try JSONDecoder().decode(LyftInfo.self, from: lyftData)
-//            for elementLyft in lyftInfo.cost_estimates {
-//                let new_item1 = LyberItem(type: elementLyft.ride_type, description: "unavailable", priceRange: "unavailable", high: Double(elementLyft.estimated_cost_cents_max), low: Double(elementLyft.estimated_cost_cents_min), distance: elementLyft.estimated_distance_miles, duration: elementLyft.estimated_duration_seconds, estimatedArrival: "unavailable")
-//                lst.append(new_item1)
-//            }
-//            print ("lst appended")
-//            print (lyftInfo)
-//            lyftFinished = true
-//        } catch let jsonErr {
-//            print("Error serializing json lyft:", jsonErr)
-//        }
-//    }.resume()
-//    
-//    while (!uberFinished || !lyftFinished) {
-//        
-//    }
-//    
-//    return lst
-//}
+func lyftPriceRange(low: Int, high: Int) -> String {
+    return "$" + String(low/100) + "-" + String(high/100)
+}
+
+func lyberDescription(type: String) -> String {
+    switch type {
+    case "lyft":
+        return "4 seats"
+    case "lyft_plus":
+        return "6 seats"
+    case "lyft_premier":
+        return "4 seats, high-end"
+    case "lyft_lux":
+        return "4 seats, black car"
+    case "lyft_luxsuv":
+        return "6 seats, black car"
+    case "UberX":
+        return "4 seats"
+    case "UberXL":
+        return "6 seats"
+    case "Black":
+        return "4 seats, luxury black"
+    case "Select":
+        return "4 seats, high-end"
+    case "Black SUV":
+        return "6 seats, luxury black"
+    default:
+        return ""
+    }
+}
+
+func lyberType(type: String) -> String {
+    switch type {
+    case "lyft":
+        return "Lyft"
+    case "lyft_plus":
+        return "Lyft Plus"
+    case "lyft_premier":
+        return "Lyft Premier"
+    case "lyft_lux":
+        return "Lyft Lux"
+    case "lyft_luxsuv":
+        return "Lyft Lux SUV"
+    case "UberX":
+        return "UberX"
+    case "UberXL":
+        return "UberXL"
+    case "Black":
+        return "Uber Black"
+    case "Select":
+        return "Uber Select"
+    case "Black SUV":
+        return "Uber Black SUV"
+    default:
+        return ""
+    }
+}

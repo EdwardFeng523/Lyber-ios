@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		8700C75720D21AEF00431022 /* getInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8700C75620D21AEF00431022 /* getInfo.swift */; };
+		87668D8320D8984D004C58C0 /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87668D8220D8984D004C58C0 /* CustomTableViewCell.swift */; };
 		877FC32A20CF67C500880906 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877FC32920CF67C500880906 /* AppDelegate.swift */; };
 		877FC32C20CF67C500880906 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877FC32B20CF67C500880906 /* ViewController.swift */; };
 		877FC32F20CF67C500880906 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 877FC32D20CF67C500880906 /* Main.storyboard */; };
@@ -20,6 +21,7 @@
 /* Begin PBXFileReference section */
 		12FE97C5654B74F534FD299F /* libPods-Lyber.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Lyber.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8700C75620D21AEF00431022 /* getInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = getInfo.swift; sourceTree = "<group>"; };
+		87668D8220D8984D004C58C0 /* CustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableViewCell.swift; sourceTree = "<group>"; };
 		877FC32620CF67C500880906 /* Lyber.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Lyber.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		877FC32920CF67C500880906 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		877FC32B20CF67C500880906 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -78,6 +80,7 @@
 				877FC32920CF67C500880906 /* AppDelegate.swift */,
 				877FC32B20CF67C500880906 /* ViewController.swift */,
 				877FC32D20CF67C500880906 /* Main.storyboard */,
+				87668D8220D8984D004C58C0 /* CustomTableViewCell.swift */,
 				877FC33020CF67C600880906 /* Assets.xcassets */,
 				877FC33220CF67C600880906 /* LaunchScreen.storyboard */,
 				877FC33520CF67C600880906 /* Info.plist */,
@@ -213,6 +216,7 @@
 			files = (
 				877FC32C20CF67C500880906 /* ViewController.swift in Sources */,
 				877FC32A20CF67C500880906 /* AppDelegate.swift in Sources */,
+				87668D8320D8984D004C58C0 /* CustomTableViewCell.swift in Sources */,
 				8700C75720D21AEF00431022 /* getInfo.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
