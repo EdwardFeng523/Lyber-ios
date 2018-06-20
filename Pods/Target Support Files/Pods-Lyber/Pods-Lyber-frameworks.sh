@@ -143,10 +143,12 @@ strip_invalid_archs() {
 
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
+  install_framework "${BUILT_PRODUCTS_DIR}/LyftSDK/LyftSDK.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/UberCore/UberCore.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/UberRides/UberRides.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
+  install_framework "${BUILT_PRODUCTS_DIR}/LyftSDK/LyftSDK.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/UberCore/UberCore.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/UberRides/UberRides.framework"
 fi

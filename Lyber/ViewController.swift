@@ -49,11 +49,6 @@ class ViewController: UIViewController
         let autocompleteControllerFrom = GMSAutocompleteViewController()
         autocompleteControllerFrom.delegate = self
         
-        // Set a filter to return only addresses.
-        let addressFilter = GMSAutocompleteFilter()
-        addressFilter.type = .address
-        autocompleteControllerFrom.autocompleteFilter = addressFilter
-        
         fromPressed = true
         present(autocompleteControllerFrom, animated: true, completion: nil)
     }

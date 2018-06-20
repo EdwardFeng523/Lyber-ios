@@ -9,6 +9,7 @@
 import UIKit
 import GooglePlaces
 import UberCore
+import LyftSDK
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,8 +17,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    internal func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        LyftConfiguration.developer = (token: "OwF6Ts2Jl6imgk4+u09Eu+QscomJgIWvuxk9TEstjIiEwvS6HlnWcoI1+J8Or8NsXZwQra2/yHpXlaAfaurgf6QfbV+EXABmAd/sQf+jSZemZVO4YC3hF00=", clientId: "bYdbbVNFZ9d3")
         GMSPlacesClient.provideAPIKey("AIzaSyB46_n3T1DLPzVboAIV6pJq6a3RODF_Ctg")
         return true
     }
@@ -56,7 +58,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         return handledUberURL
     }
-
 
 }
 

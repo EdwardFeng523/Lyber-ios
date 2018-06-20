@@ -1,0 +1,6 @@
+framework module LyftSDK {
+  umbrella header "LyftSDK-umbrella.h"
+
+  export *
+  module * { export * }
+}
