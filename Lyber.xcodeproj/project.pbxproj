@@ -15,11 +15,10 @@
 		877FC33120CF67C600880906 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 877FC33020CF67C600880906 /* Assets.xcassets */; };
 		877FC33420CF67C600880906 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 877FC33220CF67C600880906 /* LaunchScreen.storyboard */; };
 		8790D64F20D0CF830033FDED /* GooglePlaces.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8790D64E20D0CF830033FDED /* GooglePlaces.framework */; };
-		EE1621F0CF276641642FD15C /* libPods-Lyber.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 12FE97C5654B74F534FD299F /* libPods-Lyber.a */; };
+		F79E1352FA96BDC101305728 /* Pods_Lyber.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF5910D343BBACB65DB98B5B /* Pods_Lyber.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		12FE97C5654B74F534FD299F /* libPods-Lyber.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Lyber.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8700C75620D21AEF00431022 /* getInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = getInfo.swift; sourceTree = "<group>"; };
 		87668D8220D8984D004C58C0 /* CustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableViewCell.swift; sourceTree = "<group>"; };
 		877FC32620CF67C500880906 /* Lyber.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Lyber.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -32,6 +31,7 @@
 		8790D64E20D0CF830033FDED /* GooglePlaces.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GooglePlaces.framework; sourceTree = "<group>"; };
 		8A726615DF8B8E450224C3AC /* Pods-Lyber.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Lyber.release.xcconfig"; path = "Pods/Target Support Files/Pods-Lyber/Pods-Lyber.release.xcconfig"; sourceTree = "<group>"; };
 		B21B1805D0D501C136D4AA69 /* Pods-Lyber.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Lyber.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Lyber/Pods-Lyber.debug.xcconfig"; sourceTree = "<group>"; };
+		FF5910D343BBACB65DB98B5B /* Pods_Lyber.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Lyber.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -40,7 +40,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8790D64F20D0CF830033FDED /* GooglePlaces.framework in Frameworks */,
-				EE1621F0CF276641642FD15C /* libPods-Lyber.a in Frameworks */,
+				F79E1352FA96BDC101305728 /* Pods_Lyber.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -93,7 +93,7 @@
 		D8FF6986814728EA778F9437 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				12FE97C5654B74F534FD299F /* libPods-Lyber.a */,
+				FF5910D343BBACB65DB98B5B /* Pods_Lyber.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -110,6 +110,7 @@
 				877FC32320CF67C500880906 /* Frameworks */,
 				877FC32420CF67C500880906 /* Resources */,
 				CBF736F2B0740F2250282E18 /* [CP] Copy Pods Resources */,
+				95F056F352465C6036D33E38 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -167,6 +168,26 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		95F056F352465C6036D33E38 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Lyber/Pods-Lyber-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/UberCore/UberCore.framework",
+				"${BUILT_PRODUCTS_DIR}/UberRides/UberRides.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UberCore.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UberRides.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Lyber/Pods-Lyber-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		A83E2F61D37CA90081E3EE51 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;

@@ -8,6 +8,8 @@
 
 import UIKit
 import GooglePlaces
+import UberCore
+import UberRides
 
 
 
@@ -81,6 +83,16 @@ class ViewController: UIViewController
         }
     }
     
+    @IBAction func uberLogin(_ sender: Any) {
+        let loginManager = LoginManager()
+        loginManager.login(requestedScopes:[.request], presentingViewController: self, completion: { accessToken, error in
+            // Completion block. If accessToken is non-nil, you’re good to go
+            // Otherwise, error.code corresponds to the RidesAuthenticationErrorType that occured
+            if (accessToken != nil) {
+                print ("good")
+            } 
+        })
+    }
     
     func sendRequest(depar_lat: String, depar_lng: String, dest_lat: String, dest_lng: String) {
         let jsonUrlStringUber = "https://lyber-server.herokuapp.com/api/uber?depar_lat=" + depar_lat + "&depar_lng=" + depar_lng + "&dest_lat=" + dest_lat + "&dest_lng=" + dest_lng
