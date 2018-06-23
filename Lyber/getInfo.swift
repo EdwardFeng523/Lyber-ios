@@ -7,7 +7,46 @@
 //
 
 import Foundation
-import UIKit
+
+/**
+ Contains all of the code used for parsing json http response
+ **/
+
+
+struct AddressComponent: Decodable {
+    let long_name: String
+    let short_name: String
+    let types: [String]
+}
+
+struct Location: Decodable {
+    let lat: Double
+    let lng: Double
+}
+
+struct Viewport: Decodable {
+    let northeast: Location
+    let southwest: Location
+}
+
+struct Geometry: Decodable {
+    let location: Location
+    let location_type: String
+    let viewport: Viewport
+}
+
+struct Result: Decodable {
+    let address_components: [AddressComponent]
+    let formatted_address: String
+    let geometry: Geometry
+    let place_id: String
+    let types: [String]
+}
+
+struct LocationInfo: Decodable {
+    let results: [Result]
+    let status: String
+}
 
 struct UberInfo: Decodable {
     let prices: [UberItem]

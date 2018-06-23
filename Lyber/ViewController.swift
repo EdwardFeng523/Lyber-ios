@@ -28,14 +28,31 @@ class ViewController: UIViewController
         spinner.stopAnimating()
     } }
     
+    var currentLoc: CLLocation = CLLocation(latitude: 0, longitude: 0) { didSet{ print("current_location", currentLoc) } }
+    
+    let locationManager = CLLocationManager()
+    
     @IBOutlet weak var displayTable: UITableView!
     
     @IBOutlet weak var spinner: UIActivityIndicatorView!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         displayTable.delegate = self
         displayTable.dataSource = self
+        
+        // Ask for Authorisation from the User.
+        self.locationManager.requestAlwaysAuthorization()
+        
+        // For use in foreground
+        self.locationManager.requestWhenInUseAuthorization()
+        
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager.delegate = self
+            locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+            locationManager.startUpdatingLocation()
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -45,6 +62,29 @@ class ViewController: UIViewController
     
     
     @IBOutlet weak var from: UITextField!
+    
+    @IBAction func locate(_ sender: Any) {
+        let jsonUrlStringLoc = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + String(currentLoc.coordinate.latitude) + "," + String(currentLoc.coordinate.longitude) + "&key=AIzaSyAg-s2u1gxtock_vf16pzHu-eh04je99qQ"
+        guard let urlLoc = URL(string: jsonUrlStringLoc) else { return }
+        
+        URLSession.shared.dataTask(with: urlLoc) { [weak self] (data, response, err) in
+            guard let data = data else { return }
+            do {
+                let locationInfo = try JSONDecoder().decode(LocationInfo.self, from: data)
+                print("results:" , locationInfo)
+                print(locationInfo.results[0].formatted_address)
+                self?.fromCoord = self?.currentLoc.coordinate
+                DispatchQueue.main.async {
+                    self?.from.text = locationInfo.results[0].formatted_address
+                }
+            } catch let jsonErr {
+                print("Error serializing json uber:", jsonErr)
+            }
+        }.resume()
+    }
+    
+    
+    
     @IBAction func fromButton(_ sender: Any) {
         let autocompleteControllerFrom = GMSAutocompleteViewController()
         autocompleteControllerFrom.delegate = self
@@ -54,14 +94,10 @@ class ViewController: UIViewController
     }
     
     @IBOutlet weak var to: UITextField!
+    
     @IBAction func toButton(_ sender: Any) {
         let autocompleteControllerTo = GMSAutocompleteViewController()
         autocompleteControllerTo.delegate = self
-        
-        // Set a filter to return only addresses.
-        let addressFilter = GMSAutocompleteFilter()
-        addressFilter.type = .address
-        autocompleteControllerTo.autocompleteFilter = addressFilter
         
         toPressed = true
         present(autocompleteControllerTo, animated: true, completion: nil)
@@ -78,16 +114,6 @@ class ViewController: UIViewController
         }
     }
     
-    @IBAction func uberLogin(_ sender: Any) {
-        let loginManager = LoginManager()
-        loginManager.login(requestedScopes:[.request], presentingViewController: self, completion: { accessToken, error in
-            // Completion block. If accessToken is non-nil, you’re good to go
-            // Otherwise, error.code corresponds to the RidesAuthenticationErrorType that occured
-            if (accessToken != nil) {
-                print ("good")
-            } 
-        })
-    }
     
     func sendRequest(depar_lat: String, depar_lng: String, dest_lat: String, dest_lng: String) {
         let jsonUrlStringUber = "https://lyber-server.herokuapp.com/api/uber?depar_lat=" + depar_lat + "&depar_lng=" + depar_lng + "&dest_lat=" + dest_lat + "&dest_lng=" + dest_lng
@@ -198,6 +224,12 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         cell.priceRange.text = items[indexPath.row].priceRange
         return cell
     }
-    
-    
+
 }
+
+extension ViewController: CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        currentLoc = locations[0]
+    }
+}
+

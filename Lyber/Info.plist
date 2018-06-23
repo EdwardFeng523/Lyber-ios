@@ -2,6 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Please let Lyber use your location :)</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Please let Lyber use your location :)</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>
@@ -41,34 +45,34 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-    <key>UberClientID</key>
-    <string>vlafsGfdghf2I1R4aJh6kZUVvpoayOix</string>
-    <key>UberDisplayName</key>
-    <string>Lyber</string>
-    <key>LSApplicationQueriesSchemes</key>
-    <array>
-        <string>uber</string>
-        <string>uberauth</string>
-    </array>
-    <key>UberCallbackURIs</key>
-    <array>
-        <dict>
-            <key>UberCallbackURIType</key>
-            <string>General</string>
-            <key>URIString</key>
-            <string>jf44.Lyber://oauth/consumer</string>
-        </dict>
-    </array>
-    <key>CFBundleURLTypes</key>
-    <array>
-        <dict>
-            <key>CFBundleTypeRole</key>
-            <string>Editor</string>
-            <key>CFBundleURLSchemes</key>
-            <array>
-                <string>jf44.Lyber</string>
-            </array>
-        </dict>
-    </array>
+	<key>UberClientID</key>
+	<string>vlafsGfdghf2I1R4aJh6kZUVvpoayOix</string>
+	<key>UberDisplayName</key>
+	<string>Lyber</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>uber</string>
+		<string>uberauth</string>
+	</array>
+	<key>UberCallbackURIs</key>
+	<array>
+		<dict>
+			<key>UberCallbackURIType</key>
+			<string>General</string>
+			<key>URIString</key>
+			<string>jf44.Lyber://oauth/consumer</string>
+		</dict>
+	</array>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>jf44.Lyber</string>
+			</array>
+		</dict>
+	</array>
 </dict>
 </plist>

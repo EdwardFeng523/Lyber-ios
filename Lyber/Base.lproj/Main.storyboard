@@ -130,11 +130,11 @@
                                 </prototypes>
                             </tableView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="44L-TP-6Hn">
-                                <rect key="frame" x="16" y="110" width="76" height="30"/>
+                                <rect key="frame" x="31" y="110" width="47" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Uber Login"/>
+                                <state key="normal" title="Locate"/>
                                 <connections>
-                                    <action selector="uberLogin:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Flc-X6-PfG"/>
+                                    <action selector="locate:" destination="BYZ-38-t0r" eventType="touchUpInside" id="JuX-nV-rTH"/>
                                 </connections>
                             </button>
                         </subviews>
