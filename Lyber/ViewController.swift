@@ -15,25 +15,36 @@ import UberRides
 
 class ViewController: UIViewController
 {
+    // Booleans for autocomplete view controller to know which one is currently being edited.
     var fromPressed: Bool = false
     var toPressed: Bool = false
     
+    // Coordinates
     var fromCoord: CLLocationCoordinate2D? = nil
     
     var toCoord: CLLocationCoordinate2D? = nil
     
+    // List of items for display and comparison.
     var items: [LyberItem] = [] { didSet{
         print ("items were set")
         displayTable.reloadData()
         spinner.stopAnimating()
     } }
     
-    var currentLoc: CLLocation = CLLocation(latitude: 0, longitude: 0) { didSet{ print("current_location", currentLoc) } }
+    // Storing current locations
+    var currentLoc: CLLocation = CLLocation(latitude: 0, longitude: 0)
+    {
+        didSet{
+        print("current_location", currentLoc)
+        }
+    }
+    
     
     let locationManager = CLLocationManager()
     
     @IBOutlet weak var displayTable: UITableView!
     
+    // Spinner indicator
     @IBOutlet weak var spinner: UIActivityIndicatorView!
     
     
@@ -63,6 +74,8 @@ class ViewController: UIViewController
     
     @IBOutlet weak var from: UITextField!
     
+    
+    // Action listener for locating the current location.
     @IBAction func locate(_ sender: Any) {
         let jsonUrlStringLoc = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + String(currentLoc.coordinate.latitude) + "," + String(currentLoc.coordinate.longitude) + "&key=AIzaSyAg-s2u1gxtock_vf16pzHu-eh04je99qQ"
         guard let urlLoc = URL(string: jsonUrlStringLoc) else { return }
@@ -84,7 +97,7 @@ class ViewController: UIViewController
     }
     
     
-    
+    // From button triggers the autocomplete view controller.
     @IBAction func fromButton(_ sender: Any) {
         let autocompleteControllerFrom = GMSAutocompleteViewController()
         autocompleteControllerFrom.delegate = self
@@ -95,6 +108,7 @@ class ViewController: UIViewController
     
     @IBOutlet weak var to: UITextField!
     
+    // To button triggers the autocomplete view controller.
     @IBAction func toButton(_ sender: Any) {
         let autocompleteControllerTo = GMSAutocompleteViewController()
         autocompleteControllerTo.delegate = self
@@ -103,6 +117,7 @@ class ViewController: UIViewController
         present(autocompleteControllerTo, animated: true, completion: nil)
     }
     
+    // Do the actual lyber call, make two http requests.
     @IBAction func lyber(_ sender: Any) {
         if (fromCoord == nil || toCoord == nil) {
             let alert = UIAlertController(title: "Error", message: "You must provide a source and a destination to use Lyber", preferredStyle: UIAlertControllerStyle.alert)
@@ -114,7 +129,7 @@ class ViewController: UIViewController
         }
     }
     
-    
+    // Do the two http requests.
     func sendRequest(depar_lat: String, depar_lng: String, dest_lat: String, dest_lng: String) {
         let jsonUrlStringUber = "https://lyber-server.herokuapp.com/api/uber?depar_lat=" + depar_lat + "&depar_lng=" + depar_lng + "&dest_lat=" + dest_lat + "&dest_lng=" + dest_lng
         let jsonUrlStringLyft = "https://lyber-server.herokuapp.com/api/lyft?depar_lat=" + depar_lat + "&depar_lng=" + depar_lng + "&dest_lat=" + dest_lat + "&dest_lng=" + dest_lng
@@ -125,6 +140,8 @@ class ViewController: UIViewController
         guard let urlUber = URL(string: jsonUrlStringUber) else { return }
         guard let urlLyft = URL(string: jsonUrlStringLyft) else { return }
         var lst: [LyberItem] = []
+        
+        // The first request.
         URLSession.shared.dataTask(with: urlUber) { (data, response, err) in
             guard let data = data else { return }
             do {
@@ -139,8 +156,9 @@ class ViewController: UIViewController
             } catch let jsonErr {
                 print("Error serializing json uber:", jsonErr)
             }
-            }.resume()
+        }.resume()
         
+        // The second request.
         URLSession.shared.dataTask(with: urlLyft) { (data, response, err) in
             guard let lyftData = data else { return }
             do {
@@ -157,6 +175,7 @@ class ViewController: UIViewController
             }
             }.resume()
         
+        // Do animation and started waiting for the response.
         spinner.startAnimating()
         DispatchQueue.global(qos: .userInitiated).async { [weak self] in
             while (!uberFinished || !lyftFinished) {
@@ -170,6 +189,7 @@ class ViewController: UIViewController
                 && String(from_lng) == depar_lng
                 && String(to_lng) == dest_lng) {
                 DispatchQueue.main.async {
+                    // Go back to the main queue to update the gui.
                     self?.items = lst
                     self?.displayTable.separatorStyle = UITableViewCellSeparatorStyle.singleLine
                 }
@@ -181,7 +201,7 @@ class ViewController: UIViewController
     
 }
 
-
+// As an extension for autocomplete view controller.
 extension ViewController: GMSAutocompleteViewControllerDelegate {
     func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
         if (fromPressed == true) {
@@ -208,15 +228,14 @@ extension ViewController: GMSAutocompleteViewControllerDelegate {
 
 }
 
+// As an extension for UITableView
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return items.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        let cell = UITableViewCell(style: .subtitle, reuseIdentifier: nil)
-//        cell.textLabel?.text = items[indexPath.row].type
-//        cell.detailTextLabel?.text = items[indexPath.row].priceRange
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: "customCell") as! CustomTableViewCell
         cell.type.text = items[indexPath.row].type
         cell.arrivalTime.text = items[indexPath.row].description
@@ -227,6 +246,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
 
 }
 
+// As an extension for CLLocationManagerDelegate
 extension ViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         currentLoc = locations[0]
