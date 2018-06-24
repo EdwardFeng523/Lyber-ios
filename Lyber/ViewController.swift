@@ -27,7 +27,6 @@ class ViewController: UIViewController
     var fromCoord: CLLocationCoordinate2D? = nil
     {
         didSet {
-            fromMarker.opacity = 1
             fromMarker.position = fromCoord!
         }
     }
@@ -35,8 +34,9 @@ class ViewController: UIViewController
     var toCoord: CLLocationCoordinate2D? = nil
     {
         didSet {
-            toMarker.opacity = 1
+            print ("-=-=-=-=-=-=-To Marker Set")
             toMarker.position = toCoord!
+            print ("-=-=-=-=-=-=-To Marker Set, coord =", toCoord!)
         }
     }
     
@@ -54,7 +54,6 @@ class ViewController: UIViewController
     var currentLoc: CLLocation = CLLocation(latitude: 0, longitude: 0)
     {
         didSet{
-//            (self.view.subviews[0] as? GMSMapView)?.animate(toLocation: currentLoc.coordinate)
             circle.position = currentLoc.coordinate
         }
     }
@@ -96,13 +95,12 @@ class ViewController: UIViewController
         circle.icon = UIImage(named: "currentLoc")
         circle.map = mapView
         
+        fromMarker.title = "From"
         fromMarker.map = mapView
-        fromMarker.opacity = 0
         
+        toMarker.title = "To"
         toMarker.map = mapView
-        toMarker.opacity = 0
         self.displayTable.alpha = 0
-//        self.view.sendSubview(toBack: self.displayTable)
     }
     
     
@@ -284,10 +282,10 @@ extension ViewController: GMSAutocompleteViewControllerDelegate {
     func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
         if (fromPressed == true) {
             from.text = place.name
-            fromCoord = place.coordinate
+            self.fromCoord = place.coordinate
         } else {
             to.text = place.name
-            toCoord = place.coordinate
+            self.toCoord = place.coordinate
         }
         fromPressed = false
         toPressed = false
