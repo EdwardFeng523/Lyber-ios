@@ -12,8 +12,8 @@
 		877FC32A20CF67C500880906 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877FC32920CF67C500880906 /* AppDelegate.swift */; };
 		877FC32C20CF67C500880906 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877FC32B20CF67C500880906 /* ViewController.swift */; };
 		877FC32F20CF67C500880906 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 877FC32D20CF67C500880906 /* Main.storyboard */; };
-		877FC33120CF67C600880906 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 877FC33020CF67C600880906 /* Assets.xcassets */; };
 		877FC33420CF67C600880906 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 877FC33220CF67C600880906 /* LaunchScreen.storyboard */; };
+		8788955320E018360090E083 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8788955220E018360090E083 /* Images.xcassets */; };
 		8790D64F20D0CF830033FDED /* GooglePlaces.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8790D64E20D0CF830033FDED /* GooglePlaces.framework */; };
 		F79E1352FA96BDC101305728 /* Pods_Lyber.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF5910D343BBACB65DB98B5B /* Pods_Lyber.framework */; };
 /* End PBXBuildFile section */
@@ -25,9 +25,9 @@
 		877FC32920CF67C500880906 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		877FC32B20CF67C500880906 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		877FC32E20CF67C500880906 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		877FC33020CF67C600880906 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		877FC33320CF67C600880906 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		877FC33520CF67C600880906 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8788955220E018360090E083 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		8790D64E20D0CF830033FDED /* GooglePlaces.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GooglePlaces.framework; sourceTree = "<group>"; };
 		8A726615DF8B8E450224C3AC /* Pods-Lyber.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Lyber.release.xcconfig"; path = "Pods/Target Support Files/Pods-Lyber/Pods-Lyber.release.xcconfig"; sourceTree = "<group>"; };
 		B21B1805D0D501C136D4AA69 /* Pods-Lyber.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Lyber.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Lyber/Pods-Lyber.debug.xcconfig"; sourceTree = "<group>"; };
@@ -81,11 +81,11 @@
 				877FC32B20CF67C500880906 /* ViewController.swift */,
 				877FC32D20CF67C500880906 /* Main.storyboard */,
 				87668D8220D8984D004C58C0 /* CustomTableViewCell.swift */,
-				877FC33020CF67C600880906 /* Assets.xcassets */,
 				877FC33220CF67C600880906 /* LaunchScreen.storyboard */,
 				877FC33520CF67C600880906 /* Info.plist */,
 				8790D64E20D0CF830033FDED /* GooglePlaces.framework */,
 				8700C75620D21AEF00431022 /* getInfo.swift */,
+				8788955220E018360090E083 /* Images.xcassets */,
 			);
 			path = Lyber;
 			sourceTree = "<group>";
@@ -159,8 +159,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8788955320E018360090E083 /* Images.xcassets in Resources */,
 				877FC33420CF67C600880906 /* LaunchScreen.storyboard in Resources */,
-				877FC33120CF67C600880906 /* Assets.xcassets in Resources */,
 				877FC32F20CF67C500880906 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

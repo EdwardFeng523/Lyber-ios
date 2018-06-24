@@ -30,14 +30,18 @@ class ViewController: UIViewController
         print ("items were set")
         displayTable.reloadData()
         spinner.stopAnimating()
+        self.displayTable.alpha = 0.8
     } }
+    
+//    var circle = GMSCircle(position: CLLocationCoordinate2D(latitude: 0, longitude: 0), radius: 20)
+    var circle = GMSMarker(position: CLLocationCoordinate2D(latitude: 0, longitude: 0))
     
     // Storing current locations
     var currentLoc: CLLocation = CLLocation(latitude: 0, longitude: 0)
     {
         didSet{
-            (self.view.subviews[0] as? GMSMapView)?.animate(toLocation: currentLoc.coordinate)
-            
+//            (self.view.subviews[0] as? GMSMapView)?.animate(toLocation: currentLoc.coordinate)
+            circle.position = currentLoc.coordinate
         }
     }
     
@@ -74,7 +78,12 @@ class ViewController: UIViewController
         let camera = GMSCameraPosition.camera(withLatitude: 29.76328, longitude: -95.36327, zoom: 12.0)
         let mapView = GMSMapView.map(withFrame: CGRect(origin: CGPoint(x: 0,y: 0), size: CGSize(width: self.view.bounds.width, height: self.view.bounds.height)), camera: camera)
         self.view.insertSubview(mapView, at: 0)
-        self.displayTable.alpha = 0.5
+    
+    
+        circle.icon = UIImage(named: "currentLoc")
+        circle.map = mapView
+        self.displayTable.alpha = 0
+//        self.view.sendSubview(toBack: self.displayTable)
     }
     
     
@@ -102,6 +111,7 @@ class ViewController: UIViewController
                 DispatchQueue.main.async {
                     self?.from.text = locationInfo.results[0].formatted_address
                     self?.fromCoord = self?.currentLoc.coordinate
+                    (self?.view.subviews[0] as? GMSMapView)?.animate(toLocation: (self?.currentLoc.coordinate)!)
                 }
             } catch let jsonErr {
                 print("Error serializing json uber:", jsonErr)
@@ -144,18 +154,16 @@ class ViewController: UIViewController
     
     // Do the two http requests.
     func sendRequest(depar_lat: String, depar_lng: String, dest_lat: String, dest_lng: String) {
-        let jsonUrlStringUber = "https://lyber-server.herokuapp.com/api/uber?depar_lat=" + depar_lat + "&depar_lng=" + depar_lng + "&dest_lat=" + dest_lat + "&dest_lng=" + dest_lng
-        let jsonUrlStringLyft = "https://lyber-server.herokuapp.com/api/lyft?depar_lat=" + depar_lat + "&depar_lng=" + depar_lng + "&dest_lat=" + dest_lat + "&dest_lng=" + dest_lng
+//        let jsonUrlStringUber = "https://lyber-server.herokuapp.com/api/uber?depar_lat=" + depar_lat + "&depar_lng=" + depar_lng + "&dest_lat=" + dest_lat + "&dest_lng=" + dest_lng
+//        let jsonUrlStringLyft = "https://lyber-server.herokuapp.com/api/lyft?depar_lat=" + depar_lat + "&depar_lng=" + depar_lng + "&dest_lat=" + dest_lat + "&dest_lng=" + dest_lng
         
         let jsonUrlStringEstimate = "https://lyber-server.herokuapp.com/api/estimate?depar_lat=" + depar_lat + "&depar_lng=" + depar_lng + "&dest_lat=" + dest_lat + "&dest_lng=" + dest_lng
         
-        var uberFinished: Bool = false
-        var lyftFinished: Bool = false
-        
-        print ("url I sent", jsonUrlStringUber)
-        
-        guard let urlUber = URL(string: jsonUrlStringUber) else { return }
-        guard let urlLyft = URL(string: jsonUrlStringLyft) else { return }
+//        var uberFinished: Bool = false
+//        var lyftFinished: Bool = false
+    
+//        guard let urlUber = URL(string: jsonUrlStringUber) else { return }
+//        guard let urlLyft = URL(string: jsonUrlStringLyft) else { return }
         guard let urlEstimate = URL(string: jsonUrlStringEstimate) else { return }
         
         var lst: [LyberItem] = []
@@ -200,7 +208,7 @@ class ViewController: UIViewController
             do {
                 let estimateInfo = try JSONDecoder().decode(ServerEstimate.self, from: estimateData)
                 for elementInfo in estimateInfo.prices {
-                    let new_item_estimate = LyberItem(type: lyberType(type: elementInfo.display_name), description: lyberDescription(type: elementInfo.display_name), priceRange: lyftPriceRange(low: elementInfo.min_estimate, high: elementInfo.max_estimate), high: Double(elementInfo.max_estimate), low: Double(elementInfo.min_estimate), distance: elementInfo.distance, duration: elementInfo.duration, estimatedArrival: "unavailable", product_id: elementInfo.product_id)
+                    let new_item_estimate = LyberItem(company: elementInfo.company, type: lyberType(type: elementInfo.display_name), description: lyberDescription(type: elementInfo.display_name), priceRange: lyftPriceRange(low: elementInfo.min_estimate, high: elementInfo.max_estimate), high: Double(elementInfo.max_estimate), low: Double(elementInfo.min_estimate), distance: elementInfo.distance, duration: elementInfo.duration, estimatedArrival: "unavailable", product_id: elementInfo.product_id)
                     lst.append(new_item_estimate)
                 }
                 guard let from_lat = self?.fromCoord!.latitude else {return }

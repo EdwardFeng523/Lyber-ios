@@ -99,6 +99,7 @@ struct LyftItem: Decodable {
 }
 
 struct LyberItem {
+    let company: String
     let type: String
     let description: String
     let priceRange: String
