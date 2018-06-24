@@ -20,10 +20,25 @@ class ViewController: UIViewController
     var fromPressed: Bool = false
     var toPressed: Bool = false
     
+    var fromMarker = GMSMarker(position: CLLocationCoordinate2D(latitude: 0, longitude: 0))
+    var toMarker = GMSMarker(position: CLLocationCoordinate2D(latitude: 0, longitude: 0))
+    
     // Coordinates
     var fromCoord: CLLocationCoordinate2D? = nil
+    {
+        didSet {
+            fromMarker.opacity = 1
+            fromMarker.position = fromCoord!
+        }
+    }
     
     var toCoord: CLLocationCoordinate2D? = nil
+    {
+        didSet {
+            toMarker.opacity = 1
+            toMarker.position = toCoord!
+        }
+    }
     
     // List of items for display and comparison.
     var items: [LyberItem] = [] { didSet{
@@ -33,7 +48,6 @@ class ViewController: UIViewController
         self.displayTable.alpha = 0.8
     } }
     
-//    var circle = GMSCircle(position: CLLocationCoordinate2D(latitude: 0, longitude: 0), radius: 20)
     var circle = GMSMarker(position: CLLocationCoordinate2D(latitude: 0, longitude: 0))
     
     // Storing current locations
@@ -78,10 +92,15 @@ class ViewController: UIViewController
         let camera = GMSCameraPosition.camera(withLatitude: 29.76328, longitude: -95.36327, zoom: 12.0)
         let mapView = GMSMapView.map(withFrame: CGRect(origin: CGPoint(x: 0,y: 0), size: CGSize(width: self.view.bounds.width, height: self.view.bounds.height)), camera: camera)
         self.view.insertSubview(mapView, at: 0)
-    
-    
+        
         circle.icon = UIImage(named: "currentLoc")
         circle.map = mapView
+        
+        fromMarker.map = mapView
+        fromMarker.opacity = 0
+        
+        toMarker.map = mapView
+        toMarker.opacity = 0
         self.displayTable.alpha = 0
 //        self.view.sendSubview(toBack: self.displayTable)
     }
@@ -117,6 +136,10 @@ class ViewController: UIViewController
                 print("Error serializing json uber:", jsonErr)
             }
         }.resume()
+    }
+    
+    @IBAction func hideTable(_ sender: UIButton) {
+        displayTable.alpha = 0
     }
     
     
