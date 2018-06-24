@@ -10,6 +10,7 @@ import UIKit
 import GooglePlaces
 import UberCore
 import UberRides
+import GoogleMaps
 
 
 
@@ -35,12 +36,17 @@ class ViewController: UIViewController
     var currentLoc: CLLocation = CLLocation(latitude: 0, longitude: 0)
     {
         didSet{
-        print("current_location", currentLoc)
+            (self.view.subviews[0] as? GMSMapView)?.animate(toLocation: currentLoc.coordinate)
+            
         }
     }
     
     
     let locationManager = CLLocationManager()
+    
+    
+    
+    
     
     @IBOutlet weak var displayTable: UITableView!
     
@@ -64,7 +70,14 @@ class ViewController: UIViewController
             locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
             locationManager.startUpdatingLocation()
         }
+        
+        let camera = GMSCameraPosition.camera(withLatitude: 29.76328, longitude: -95.36327, zoom: 12.0)
+        let mapView = GMSMapView.map(withFrame: CGRect(origin: CGPoint(x: 0,y: 0), size: CGSize(width: self.view.bounds.width, height: self.view.bounds.height)), camera: camera)
+        self.view.insertSubview(mapView, at: 0)
+        self.displayTable.alpha = 0.5
     }
+    
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -86,9 +99,9 @@ class ViewController: UIViewController
                 let locationInfo = try JSONDecoder().decode(LocationInfo.self, from: data)
                 print("results:" , locationInfo)
                 print(locationInfo.results[0].formatted_address)
-                self?.fromCoord = self?.currentLoc.coordinate
                 DispatchQueue.main.async {
                     self?.from.text = locationInfo.results[0].formatted_address
+                    self?.fromCoord = self?.currentLoc.coordinate
                 }
             } catch let jsonErr {
                 print("Error serializing json uber:", jsonErr)
@@ -134,68 +147,102 @@ class ViewController: UIViewController
         let jsonUrlStringUber = "https://lyber-server.herokuapp.com/api/uber?depar_lat=" + depar_lat + "&depar_lng=" + depar_lng + "&dest_lat=" + dest_lat + "&dest_lng=" + dest_lng
         let jsonUrlStringLyft = "https://lyber-server.herokuapp.com/api/lyft?depar_lat=" + depar_lat + "&depar_lng=" + depar_lng + "&dest_lat=" + dest_lat + "&dest_lng=" + dest_lng
         
+        let jsonUrlStringEstimate = "https://lyber-server.herokuapp.com/api/estimate?depar_lat=" + depar_lat + "&depar_lng=" + depar_lng + "&dest_lat=" + dest_lat + "&dest_lng=" + dest_lng
+        
         var uberFinished: Bool = false
         var lyftFinished: Bool = false
         
+        print ("url I sent", jsonUrlStringUber)
+        
         guard let urlUber = URL(string: jsonUrlStringUber) else { return }
         guard let urlLyft = URL(string: jsonUrlStringLyft) else { return }
+        guard let urlEstimate = URL(string: jsonUrlStringEstimate) else { return }
+        
         var lst: [LyberItem] = []
         
-        // The first request.
-        URLSession.shared.dataTask(with: urlUber) { (data, response, err) in
-            guard let data = data else { return }
+//        // The first request.
+//        URLSession.shared.dataTask(with: urlUber) { (data, response, err) in
+//            guard let data = data else { return }
+//            do {
+//                let uberInfo = try JSONDecoder().decode(UberInfo.self, from: data)
+//                print (uberInfo)
+//                for elementUber in uberInfo.prices {
+//                    let new_item = LyberItem(type: lyberType(type: elementUber.display_name) , description: lyberDescription(type: elementUber.display_name), priceRange: elementUber.estimate, high: Double(elementUber.high_estimate), low: Double(elementUber.low_estimate), distance: elementUber.distance, duration: elementUber.duration, estimatedArrival: "unavailable")
+//                    lst.append(new_item)
+//                }
+//                print ("uber lst appended")
+//                uberFinished = true
+//            } catch let jsonErr {
+//                print("Error serializing json uber:", jsonErr)
+//            }
+//        }.resume()
+//
+//        // The second request.
+//        URLSession.shared.dataTask(with: urlLyft) { (data, response, err) in
+//            guard let lyftData = data else { return }
+//            do {
+//                let lyftInfo = try JSONDecoder().decode(LyftInfo.self, from: lyftData)
+//                for elementLyft in lyftInfo.cost_estimates {
+//                    let new_item1 = LyberItem(type: lyberType(type: elementLyft.ride_type), description: lyberDescription(type: elementLyft.ride_type), priceRange: lyftPriceRange(low: elementLyft.estimated_cost_cents_min, high: elementLyft.estimated_cost_cents_max), high: Double(elementLyft.estimated_cost_cents_max), low: Double(elementLyft.estimated_cost_cents_min), distance: elementLyft.estimated_distance_miles, duration: elementLyft.estimated_duration_seconds, estimatedArrival: "unavailable")
+//                    lst.append(new_item1)
+//                }
+//                print ("lyft slst appended")
+//                print (lyftInfo)
+//                lyftFinished = true
+//            } catch let jsonErr {
+//                print("Error serializing json lyft:", jsonErr)
+//            }
+//        }.resume()
+        
+        spinner.startAnimating()
+        URLSession.shared.dataTask(with: urlEstimate) { [weak self] (data, response, err) in
+            guard let estimateData = data else { return }
             do {
-                let uberInfo = try JSONDecoder().decode(UberInfo.self, from: data)
-                for elementUber in uberInfo.prices {
-                    let new_item = LyberItem(type: lyberType(type: elementUber.display_name) , description: lyberDescription(type: elementUber.display_name), priceRange: elementUber.estimate, high: Double(elementUber.high_estimate), low: Double(elementUber.low_estimate), distance: elementUber.distance, duration: elementUber.duration, estimatedArrival: "unavailable")
-                    lst.append(new_item)
+                let estimateInfo = try JSONDecoder().decode(ServerEstimate.self, from: estimateData)
+                for elementInfo in estimateInfo.prices {
+                    let new_item_estimate = LyberItem(type: lyberType(type: elementInfo.display_name), description: lyberDescription(type: elementInfo.display_name), priceRange: lyftPriceRange(low: elementInfo.min_estimate, high: elementInfo.max_estimate), high: Double(elementInfo.max_estimate), low: Double(elementInfo.min_estimate), distance: elementInfo.distance, duration: elementInfo.duration, estimatedArrival: "unavailable", product_id: elementInfo.product_id)
+                    lst.append(new_item_estimate)
                 }
-                print ("lst appended")
-                print (uberInfo)
-                uberFinished = true
+                guard let from_lat = self?.fromCoord!.latitude else {return }
+                guard let from_lng = self?.fromCoord!.longitude else {return }
+                guard let to_lat = self?.toCoord!.latitude else {return }
+                guard let to_lng = self?.toCoord!.longitude else {return }
+                if (String(from_lat) == depar_lat
+                    && String(to_lat) == dest_lat
+                    && String(from_lng) == depar_lng
+                    && String(to_lng) == dest_lng) {
+                    DispatchQueue.main.async {
+                        // Go back to the main queue to update the gui.
+                        self?.items = lst
+                        self?.displayTable.separatorStyle = UITableViewCellSeparatorStyle.singleLine
+                    }
+                }
             } catch let jsonErr {
-                print("Error serializing json uber:", jsonErr)
+                print ("Error serializing json Estimate:", jsonErr)
             }
         }.resume()
         
-        // The second request.
-        URLSession.shared.dataTask(with: urlLyft) { (data, response, err) in
-            guard let lyftData = data else { return }
-            do {
-                let lyftInfo = try JSONDecoder().decode(LyftInfo.self, from: lyftData)
-                for elementLyft in lyftInfo.cost_estimates {
-                    let new_item1 = LyberItem(type: lyberType(type: elementLyft.ride_type), description: lyberDescription(type: elementLyft.ride_type), priceRange: lyftPriceRange(low: elementLyft.estimated_cost_cents_min, high: elementLyft.estimated_cost_cents_max), high: Double(elementLyft.estimated_cost_cents_max), low: Double(elementLyft.estimated_cost_cents_min), distance: elementLyft.estimated_distance_miles, duration: elementLyft.estimated_duration_seconds, estimatedArrival: "unavailable")
-                    lst.append(new_item1)
-                }
-                print ("lst appended")
-                print (lyftInfo)
-                lyftFinished = true
-            } catch let jsonErr {
-                print("Error serializing json lyft:", jsonErr)
-            }
-            }.resume()
         
-        // Do animation and started waiting for the response.
-        spinner.startAnimating()
-        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
-            while (!uberFinished || !lyftFinished) {
-            }
-            guard let from_lat = self?.fromCoord!.latitude else {return }
-            guard let from_lng = self?.fromCoord!.longitude else {return }
-            guard let to_lat = self?.toCoord!.latitude else {return }
-            guard let to_lng = self?.toCoord!.longitude else {return }
-            if (String(from_lat) == depar_lat
-                && String(to_lat) == dest_lat
-                && String(from_lng) == depar_lng
-                && String(to_lng) == dest_lng) {
-                DispatchQueue.main.async {
-                    // Go back to the main queue to update the gui.
-                    self?.items = lst
-                    self?.displayTable.separatorStyle = UITableViewCellSeparatorStyle.singleLine
-                }
-            }
-            
-        }
+//        // Do animation and started waiting for the response.
+//        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+//            while (!uberFinished || !lyftFinished) {
+//            }
+//            guard let from_lat = self?.fromCoord!.latitude else {return }
+//            guard let from_lng = self?.fromCoord!.longitude else {return }
+//            guard let to_lat = self?.toCoord!.latitude else {return }
+//            guard let to_lng = self?.toCoord!.longitude else {return }
+//            if (String(from_lat) == depar_lat
+//                && String(to_lat) == dest_lat
+//                && String(from_lng) == depar_lng
+//                && String(to_lng) == dest_lng) {
+//                DispatchQueue.main.async {
+//                    // Go back to the main queue to update the gui.
+//                    self?.items = lst
+//                    self?.displayTable.separatorStyle = UITableViewCellSeparatorStyle.singleLine
+//                }
+//            }
+//
+//        }
     }
 
     

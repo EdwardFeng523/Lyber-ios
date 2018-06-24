@@ -12,6 +12,23 @@ import Foundation
  Contains all of the code used for parsing json http response
  **/
 
+struct ServerEstimate: Decodable {
+    let prices: [EstimateItem]
+}
+
+struct EstimateItem: Decodable {
+    let company: String
+    let display_name: String
+    let product_id: String
+    let max_estimate: Int
+    let min_estimate: Int
+    let distance: Double
+    let duration: Int
+    let currency_code: String
+}
+
+
+
 
 struct AddressComponent: Decodable {
     let long_name: String
@@ -90,23 +107,24 @@ struct LyberItem {
     let distance: Double
     let duration: Int
     let estimatedArrival: String
+    let product_id: String
 }
 
 func lyftPriceRange(low: Int, high: Int) -> String {
-    return "$" + String(low/100) + "-" + String(high/100)
+    return "$" + String(low) + "-" + String(high)
 }
 
 func lyberDescription(type: String) -> String {
     switch type {
-    case "lyft":
+    case "Lyft":
         return "4 seats"
-    case "lyft_plus":
+    case "Lyft Plus":
         return "6 seats"
-    case "lyft_premier":
+    case "Lyft Premier":
         return "4 seats, high-end"
-    case "lyft_lux":
+    case "Lyft Lux":
         return "4 seats, black car"
-    case "lyft_luxsuv":
+    case "Lyft Lux SUV":
         return "6 seats, black car"
     case "UberX":
         return "4 seats"
@@ -119,7 +137,7 @@ func lyberDescription(type: String) -> String {
     case "Black SUV":
         return "6 seats, luxury black"
     default:
-        return ""
+        return type
     }
 }
 
@@ -146,6 +164,6 @@ func lyberType(type: String) -> String {
     case "Black SUV":
         return "Uber Black SUV"
     default:
-        return ""
+        return type
     }
 }
