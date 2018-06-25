@@ -27,16 +27,19 @@ class ViewController: UIViewController
     var fromCoord: CLLocationCoordinate2D? = nil
     {
         didSet {
-            fromMarker.position = fromCoord!
+            if (fromCoord != nil) {
+                fromMarker.position = fromCoord!
+                print("from Marker:", fromMarker.position)
+            }
         }
     }
     
     var toCoord: CLLocationCoordinate2D? = nil
     {
         didSet {
-            print ("-=-=-=-=-=-=-To Marker Set")
-            toMarker.position = toCoord!
-            print ("-=-=-=-=-=-=-To Marker Set, coord =", toCoord!)
+            if (toCoord != nil) {
+                toMarker.position = toCoord!
+            }
         }
     }
     
@@ -60,9 +63,6 @@ class ViewController: UIViewController
     
     
     let locationManager = CLLocationManager()
-    
-    
-    
     
     
     @IBOutlet weak var displayTable: UITableView!
@@ -96,9 +96,11 @@ class ViewController: UIViewController
         circle.map = mapView
         
         fromMarker.title = "From"
+        fromMarker.tracksViewChanges = true
         fromMarker.map = mapView
         
         toMarker.title = "To"
+        toMarker.tracksViewChanges = true
         toMarker.map = mapView
         self.displayTable.alpha = 0
     }
@@ -112,7 +114,6 @@ class ViewController: UIViewController
     
     
     @IBOutlet weak var from: UITextField!
-    
     
     // Action listener for locating the current location.
     @IBAction func locate(_ sender: Any) {
