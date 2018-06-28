@@ -29,6 +29,7 @@ class ViewController: UIViewController
         didSet {
             if (fromCoord != nil) {
                 fromMarker.position = fromCoord!
+                (view.subviews[0] as? GMSMapView)?.animate(toLocation: fromCoord!)
                 print("from Marker:", fromMarker.position)
             }
         }
@@ -39,6 +40,7 @@ class ViewController: UIViewController
         didSet {
             if (toCoord != nil) {
                 toMarker.position = toCoord!
+                (view.subviews[0] as? GMSMapView)?.animate(toLocation: toCoord!)
             }
         }
     }
@@ -103,9 +105,18 @@ class ViewController: UIViewController
         toMarker.tracksViewChanges = true
         toMarker.map = mapView
         self.displayTable.alpha = 0
+        print ("View Did Load is called-=-=-=-=-=-=-=-=-=-=-=")
     }
     
-    
+    override func viewDidAppear(_ animated: Bool) {
+        if (fromCoord != nil) {
+            fromMarker.position = fromCoord!
+        }
+        if (toCoord != nil) {
+            toMarker.position = toCoord!
+        }
+        
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

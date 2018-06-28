@@ -25,6 +25,7 @@ struct EstimateItem: Decodable {
     let distance: Double
     let duration: Int
     let currency_code: String
+    let eta: Int
 }
 
 
