@@ -285,11 +285,22 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         if (items[indexPath.row].company == "uber") {
-            print ("got it!")
+            let builder = RideParametersBuilder()
+            let pickupLocation = CLLocation(latitude: fromCoord!.latitude, longitude: fromCoord!.longitude)
+            let dropoffLocation = CLLocation(latitude: toCoord!.latitude, longitude: toCoord!.longitude)
+            builder.pickupLocation = pickupLocation
+            builder.dropoffLocation = dropoffLocation
+            builder.dropoffNickname = "UberHQ"
+            builder.dropoffAddress = to.text!
+            builder.productID = items[indexPath.row].product_id
+            let rideParameters = builder.build()
             
+            let deeplink = RequestDeeplink(rideParameters: rideParameters, fallbackType: .mobileWeb)
+            deeplink.execute()
         } else {
-            lyft://partner=YOUR_CLIENT_ID
-            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            let lyftDeepLinkStr = "lyft://ridetype?id=" + items[indexPath.row].product_id + "&pickup[latitude]=" + String(fromCoord!.latitude) + "&pickup[longitude]=" + String(fromCoord!.longitude) + "&destination[latitude]=" + String(toCoord!.latitude) + "&destination[longitude]=" + String(toCoord!.longitude)
+            guard let lyftDeepLink = URL(string: lyftDeepLinkStr) else { return }
+            UIApplication.shared.open(lyftDeepLink, options: [:], completionHandler: nil)
         }
     }
 
