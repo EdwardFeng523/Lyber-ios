@@ -243,14 +243,27 @@ class ViewController: UIViewController, GMSAutocompleteViewControllerDelegate
                 self?.from.text = place.name
                 self?.fromCoord = place.coordinate
                 self?.fromMarker.position = place.coordinate
-                (self?.view.subviews[0] as? GMSMapView)?.animate(toLocation: place.coordinate)
+                if (self?.toCoord != nil) {
+                    let bounds = GMSCoordinateBounds(coordinate: (self?.fromCoord)!, coordinate: (self?.toCoord)!)
+                    (self?.view.subviews[0] as? GMSMapView)?.animate(with: GMSCameraUpdate.fit(bounds, withPadding: 50))
+                } else {
+                    (self?.view.subviews[0] as? GMSMapView)?.animate(toLocation: place.coordinate)
+                }
             }
         } else {
             DispatchQueue.main.async { [weak self] in
                 self?.to.text = place.name
                 self?.toCoord = place.coordinate
                 self?.toMarker.position = place.coordinate
-                (self?.view.subviews[0] as? GMSMapView)?.animate(toLocation: place.coordinate)
+                
+                if (self?.fromCoord != nil) {
+                    let bounds = GMSCoordinateBounds(coordinate: (self?.fromCoord)!, coordinate: (self?.toCoord)!)
+                    print ("north east", bounds.northEast)
+                    (self?.view.subviews[0] as? GMSMapView)?.animate(with: GMSCameraUpdate.fit(bounds, withPadding: 50))
+                } else {
+                    (self?.view.subviews[0] as? GMSMapView)?.animate(toLocation: place.coordinate)
+                }
+                
             }
         }
         fromPressed = false
@@ -269,42 +282,6 @@ class ViewController: UIViewController, GMSAutocompleteViewControllerDelegate
     }
 
 }
-
-//// As an extension for autocomplete view controller.
-//extension ViewController: GMSAutocompleteViewControllerDelegate {
-//    // Autocomplete extension code
-//    func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
-//        if (fromPressed == true) {
-//            DispatchQueue.main.async { [weak self] in
-//                self?.from.text = place.name
-//                self?.fromCoord = place.coordinate
-//                self?.fromMarker.position = place.coordinate
-//                (self?.view.subviews[0] as? GMSMapView)?.animate(toLocation: place.coordinate)
-//            }
-//        } else {
-//            DispatchQueue.main.async { [weak self] in
-//                self?.to.text = place.name
-//                self?.toCoord = place.coordinate
-//                self?.toMarker.position = place.coordinate
-//                (self?.view.subviews[0] as? GMSMapView)?.animate(toLocation: place.coordinate)
-//            }
-//        }
-//        fromPressed = false
-//        toPressed = false
-//        self.dismiss(animated: true, completion: nil)
-//    }
-//
-//    func viewController(_ viewController: GMSAutocompleteViewController, didFailAutocompleteWithError error: Error) {
-//        UIApplication.shared.isNetworkActivityIndicatorVisible = true
-//    }
-//
-//    func wasCancelled(_ viewController: GMSAutocompleteViewController) {
-//        fromPressed = false
-//        toPressed = false
-//        self.dismiss(animated: true, completion: nil)
-//    }
-//
-//}
 
 // As an extension for UITableView
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
