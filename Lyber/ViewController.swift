@@ -13,8 +13,6 @@ import UberRides
 import GoogleMaps
 import CoreLocation
 
-
-
 class ViewController: UIViewController, GMSAutocompleteViewControllerDelegate
 {
     // Booleans for autocomplete view controller to know which one is currently being edited.
@@ -26,25 +24,8 @@ class ViewController: UIViewController, GMSAutocompleteViewControllerDelegate
     
     // Coordinates
     var fromCoord: CLLocationCoordinate2D? = nil
-    {
-        didSet {
-            if (fromCoord != nil) {
-//                fromMarker.position = fromCoord!
-//                (view.subviews[0] as? GMSMapView)?.animate(toLocation: fromCoord!)
-//                print("from Marker:", fromMarker.position)
-            }
-        }
-    }
     
     var toCoord: CLLocationCoordinate2D? = nil
-    {
-        didSet {
-            if (toCoord != nil) {
-//                toMarker.position = toCoord!
-//                (view.subviews[0] as? GMSMapView)?.animate(toLocation: toCoord!)
-            }
-        }
-    }
     
     // List of items for display and comparison.
     var items: [LyberItem] = [] { didSet{
@@ -54,6 +35,7 @@ class ViewController: UIViewController, GMSAutocompleteViewControllerDelegate
         self.displayTable.alpha = 0.8
     } }
     
+    // The custom google map marker representing the user's current location.
     var circle = GMSMarker(position: CLLocationCoordinate2D(latitude: 0, longitude: 0))
     
     // Storing current locations
@@ -64,15 +46,12 @@ class ViewController: UIViewController, GMSAutocompleteViewControllerDelegate
         }
     }
     
-    
     let locationManager = CLLocationManager()
-    
     
     @IBOutlet weak var displayTable: UITableView!
     
     // Spinner indicator
     @IBOutlet weak var spinner: UIActivityIndicatorView!
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -101,10 +80,12 @@ class ViewController: UIViewController, GMSAutocompleteViewControllerDelegate
         fromMarker.title = "From"
         fromMarker.icon = UIImage(named: "marker")
         fromMarker.map = mapView
+        fromMarker.opacity = 0
         
         toMarker.title = "To"
         toMarker.icon = UIImage(named: "marker")
         toMarker.map = mapView
+        toMarker.opacity = 1
         self.displayTable.alpha = 0
     }
     
@@ -139,6 +120,7 @@ class ViewController: UIViewController, GMSAutocompleteViewControllerDelegate
                 DispatchQueue.main.async {
                     self?.from.text = locationInfo.results[0].formatted_address
                     self?.fromCoord = self?.currentLoc.coordinate
+                    self?.fromMarker.opacity = 1
                     self?.fromMarker.position = (self?.fromCoord)!
                     (self?.view.subviews[0] as? GMSMapView)?.animate(toLocation: (self?.currentLoc.coordinate)!)
                 }
@@ -235,17 +217,17 @@ class ViewController: UIViewController, GMSAutocompleteViewControllerDelegate
 
     }
     
-    
     // GMSAutocomplet code
     func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
         if (fromPressed == true) {
             DispatchQueue.main.async { [weak self] in
                 self?.from.text = place.name
+                self?.fromMarker.opacity = 1
                 self?.fromCoord = place.coordinate
                 self?.fromMarker.position = place.coordinate
                 if (self?.toCoord != nil) {
                     let bounds = GMSCoordinateBounds(coordinate: (self?.fromCoord)!, coordinate: (self?.toCoord)!)
-                    (self?.view.subviews[0] as? GMSMapView)?.animate(with: GMSCameraUpdate.fit(bounds, withPadding: 50))
+                    (self?.view.subviews[0] as? GMSMapView)?.animate(with: GMSCameraUpdate.fit(bounds, withPadding: 100))
                 } else {
                     (self?.view.subviews[0] as? GMSMapView)?.animate(toLocation: place.coordinate)
                 }
@@ -254,12 +236,13 @@ class ViewController: UIViewController, GMSAutocompleteViewControllerDelegate
             DispatchQueue.main.async { [weak self] in
                 self?.to.text = place.name
                 self?.toCoord = place.coordinate
+                self?.toMarker.opacity = 1
                 self?.toMarker.position = place.coordinate
                 
                 if (self?.fromCoord != nil) {
                     let bounds = GMSCoordinateBounds(coordinate: (self?.fromCoord)!, coordinate: (self?.toCoord)!)
                     print ("north east", bounds.northEast)
-                    (self?.view.subviews[0] as? GMSMapView)?.animate(with: GMSCameraUpdate.fit(bounds, withPadding: 50))
+                    (self?.view.subviews[0] as? GMSMapView)?.animate(with: GMSCameraUpdate.fit(bounds, withPadding: 100))
                 } else {
                     (self?.view.subviews[0] as? GMSMapView)?.animate(toLocation: place.coordinate)
                 }
@@ -290,7 +273,6 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         let cell = tableView.dequeueReusableCell(withIdentifier: "customCell") as! CustomTableViewCell
         cell.type.text = items[indexPath.row].type
         cell.estimateTime.text = String(items[indexPath.row].estimatedArrival) + " min away"

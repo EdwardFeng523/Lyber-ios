@@ -66,39 +66,6 @@ struct LocationInfo: Decodable {
     let status: String
 }
 
-struct UberInfo: Decodable {
-    let prices: [UberItem]
-}
-
-struct UberItem: Decodable {
-    let localized_display_name: String
-    let distance: Double
-    let display_name: String
-    let product_id: String
-    let high_estimate: Int
-    let low_estimate: Int
-    let duration: Int
-    let estimate: String
-    let currency_code: String
-}
-
-struct LyftInfo: Decodable {
-    let cost_estimates: [LyftItem]
-}
-
-struct LyftItem: Decodable {
-    let ride_type: String
-    let estimated_duration_seconds: Int
-    let estimated_distance_miles: Double
-    let price_quote_id: String
-    let estimated_cost_cents_max: Int
-    let primetime_percentage: String
-    let is_valid_estimate: Bool
-    let currency: String
-    let cost_token: String?
-    let estimated_cost_cents_min: Int
-}
-
 struct LyberItem {
     let company: String
     let type: String
@@ -168,4 +135,41 @@ func lyberType(type: String) -> String {
     default:
         return type
     }
+}
+
+
+
+
+// Below are deprecated structs for parsing json from the old api
+struct UberInfo: Decodable {
+    let prices: [UberItem]
+}
+
+struct UberItem: Decodable {
+    let localized_display_name: String
+    let distance: Double
+    let display_name: String
+    let product_id: String
+    let high_estimate: Int
+    let low_estimate: Int
+    let duration: Int
+    let estimate: String
+    let currency_code: String
+}
+
+struct LyftInfo: Decodable {
+    let cost_estimates: [LyftItem]
+}
+
+struct LyftItem: Decodable {
+    let ride_type: String
+    let estimated_duration_seconds: Int
+    let estimated_distance_miles: Double
+    let price_quote_id: String
+    let estimated_cost_cents_max: Int
+    let primetime_percentage: String
+    let is_valid_estimate: Bool
+    let currency: String
+    let cost_token: String?
+    let estimated_cost_cents_min: Int
 }

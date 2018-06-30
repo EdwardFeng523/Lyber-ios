@@ -18,14 +18,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="18o-kL-3Hx">
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" ambiguous="YES" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="18o-kL-3Hx">
                                 <rect key="frame" x="169" y="145" width="37" height="37"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="color" red="1" green="0.13022580235566616" blue="0.96959598480424414" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </activityIndicatorView>
-                            <view alpha="0.80000000000000004" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZvD-nW-bTc">
+                            <view alpha="0.80000000000000004" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZvD-nW-bTc">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="135"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="To" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pg2-Gw-oHc">
                                         <rect key="frame" x="33" y="93" width="228" height="30"/>
@@ -80,9 +78,8 @@
                                 </subviews>
                                 <color key="backgroundColor" red="0.99162976823225346" green="1" blue="0.99696541013986617" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="107" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Cq7-eO-BcK">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="107" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Cq7-eO-BcK">
                                 <rect key="frame" x="16" y="190" width="343" height="466"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <view key="tableHeaderView" contentMode="scaleToFill" id="vz7-uz-7dZ">
                                     <rect key="frame" x="0.0" y="0.0" width="343" height="44"/>
@@ -184,6 +181,20 @@
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" red="0.87801128345828405" green="1" blue="0.97766509826829973" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="Cq7-eO-BcK" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="5oy-ws-RCu"/>
+                            <constraint firstItem="ZvD-nW-bTc" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="ING-x6-Hhk"/>
+                            <constraint firstItem="18o-kL-3Hx" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="169" id="IUf-LJ-aiF"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Cq7-eO-BcK" secondAttribute="bottom" constant="11" id="RXJ-lj-w1Y"/>
+                            <constraint firstItem="18o-kL-3Hx" firstAttribute="top" secondItem="ZvD-nW-bTc" secondAttribute="bottom" constant="10" id="TQm-9x-32Y"/>
+                            <constraint firstItem="ZvD-nW-bTc" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="g0H-Wp-QWa"/>
+                            <constraint firstItem="Cq7-eO-BcK" firstAttribute="top" secondItem="18o-kL-3Hx" secondAttribute="bottom" constant="8" id="mbp-FD-xC3"/>
+                            <constraint firstItem="ZvD-nW-bTc" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="nAZ-sn-c9s"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Cq7-eO-BcK" secondAttribute="trailing" constant="16" id="qOM-Gh-2b2"/>
+                            <constraint firstItem="Cq7-eO-BcK" firstAttribute="top" secondItem="18o-kL-3Hx" secondAttribute="bottom" constant="8" id="sLi-bO-GXO"/>
+                            <constraint firstItem="18o-kL-3Hx" firstAttribute="top" secondItem="ZvD-nW-bTc" secondAttribute="bottom" constant="10" id="vTJ-dr-6uf"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="18o-kL-3Hx" secondAttribute="trailing" constant="169" id="yjT-GF-n7u"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
