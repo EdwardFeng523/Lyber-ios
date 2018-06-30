@@ -15,7 +15,7 @@ import CoreLocation
 
 
 
-class ViewController: UIViewController
+class ViewController: UIViewController, GMSAutocompleteViewControllerDelegate
 {
     // Booleans for autocomplete view controller to know which one is currently being edited.
     var fromPressed: Bool = false
@@ -99,12 +99,13 @@ class ViewController: UIViewController
         circle.map = mapView
         
         fromMarker.title = "From"
+        fromMarker.icon = UIImage(named: "marker")
         fromMarker.map = mapView
         
         toMarker.title = "To"
+        toMarker.icon = UIImage(named: "marker")
         toMarker.map = mapView
         self.displayTable.alpha = 0
-        print ("View Did Load is called-=-=-=-=-=-=-=-=-=-=-=")
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -233,11 +234,9 @@ class ViewController: UIViewController
         }.resume()
 
     }
-}
-
-// As an extension for autocomplete view controller.
-extension ViewController: GMSAutocompleteViewControllerDelegate {
-    // Autocomplete extension code
+    
+    
+    // GMSAutocomplet code
     func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
         if (fromPressed == true) {
             DispatchQueue.main.async { [weak self] in
@@ -246,7 +245,6 @@ extension ViewController: GMSAutocompleteViewControllerDelegate {
                 self?.fromMarker.position = place.coordinate
                 (self?.view.subviews[0] as? GMSMapView)?.animate(toLocation: place.coordinate)
             }
-            
         } else {
             DispatchQueue.main.async { [weak self] in
                 self?.to.text = place.name
@@ -254,7 +252,6 @@ extension ViewController: GMSAutocompleteViewControllerDelegate {
                 self?.toMarker.position = place.coordinate
                 (self?.view.subviews[0] as? GMSMapView)?.animate(toLocation: place.coordinate)
             }
-            
         }
         fromPressed = false
         toPressed = false
@@ -272,6 +269,42 @@ extension ViewController: GMSAutocompleteViewControllerDelegate {
     }
 
 }
+
+//// As an extension for autocomplete view controller.
+//extension ViewController: GMSAutocompleteViewControllerDelegate {
+//    // Autocomplete extension code
+//    func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
+//        if (fromPressed == true) {
+//            DispatchQueue.main.async { [weak self] in
+//                self?.from.text = place.name
+//                self?.fromCoord = place.coordinate
+//                self?.fromMarker.position = place.coordinate
+//                (self?.view.subviews[0] as? GMSMapView)?.animate(toLocation: place.coordinate)
+//            }
+//        } else {
+//            DispatchQueue.main.async { [weak self] in
+//                self?.to.text = place.name
+//                self?.toCoord = place.coordinate
+//                self?.toMarker.position = place.coordinate
+//                (self?.view.subviews[0] as? GMSMapView)?.animate(toLocation: place.coordinate)
+//            }
+//        }
+//        fromPressed = false
+//        toPressed = false
+//        self.dismiss(animated: true, completion: nil)
+//    }
+//
+//    func viewController(_ viewController: GMSAutocompleteViewController, didFailAutocompleteWithError error: Error) {
+//        UIApplication.shared.isNetworkActivityIndicatorVisible = true
+//    }
+//
+//    func wasCancelled(_ viewController: GMSAutocompleteViewController) {
+//        fromPressed = false
+//        toPressed = false
+//        self.dismiss(animated: true, completion: nil)
+//    }
+//
+//}
 
 // As an extension for UITableView
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
@@ -313,7 +346,6 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             UIApplication.shared.open(lyftDeepLink, options: [:], completionHandler: nil)
         }
     }
-
 }
 
 // As an extension for CLLocationManagerDelegate
