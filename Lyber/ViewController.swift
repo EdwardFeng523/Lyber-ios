@@ -152,7 +152,19 @@ class ViewController: UIViewController
         displayTable.alpha = 0
     }
     
+    @IBAction func sortByPrice(_ sender: Any) {
+        items.sort { (itemA, itemB) -> Bool in
+            return itemA.low < itemB.low
+        }
+        displayTable.reloadData()
+    }
     
+    @IBAction func sortByTime(_ sender: Any) {
+        items.sort { (itemA, itemB) -> Bool in
+            return itemA.estimatedArrival < itemB.estimatedArrival
+        }
+        displayTable.reloadData()
+    }
     // From button triggers the autocomplete view controller.
     @IBAction func fromButton(_ sender: Any) {
         let autocompleteControllerFrom = GMSAutocompleteViewController()
@@ -241,7 +253,7 @@ class ViewController: UIViewController
             do {
                 let estimateInfo = try JSONDecoder().decode(ServerEstimate.self, from: estimateData)
                 for elementInfo in estimateInfo.prices {
-                    let new_item_estimate = LyberItem(company: elementInfo.company, type: lyberType(type: elementInfo.display_name), description: lyberDescription(type: elementInfo.display_name), priceRange: lyftPriceRange(low: elementInfo.min_estimate, high: elementInfo.max_estimate), high: Double(elementInfo.max_estimate), low: Double(elementInfo.min_estimate), distance: elementInfo.distance, duration: elementInfo.duration, estimatedArrival: "unavailable", product_id: elementInfo.product_id)
+                    let new_item_estimate = LyberItem(company: elementInfo.company, type: lyberType(type: elementInfo.display_name), description: lyberDescription(type: elementInfo.display_name), priceRange: lyftPriceRange(low: elementInfo.min_estimate, high: elementInfo.max_estimate), high: Double(elementInfo.max_estimate), low: Double(elementInfo.min_estimate), distance: elementInfo.distance, duration: elementInfo.duration, estimatedArrival: elementInfo.eta / 60, product_id: elementInfo.product_id)
                     lst.append(new_item_estimate)
                 }
                 guard let from_lat = self?.fromCoord!.latitude else {return }
@@ -326,8 +338,10 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "customCell") as! CustomTableViewCell
         cell.type.text = items[indexPath.row].type
-        cell.arrivalTime.text = items[indexPath.row].description
-        cell.distance.text = String(items[indexPath.row].distance) + "mi"
+        cell.estimateTime.text = String(items[indexPath.row].estimatedArrival) + " min away"
+        
+        cell.iconDisplay.image = items[indexPath.row].company == "uber" ? UIImage(named: "uberIcon") : UIImage(named: "lyftIcon")
+        
         cell.priceRange.text = items[indexPath.row].priceRange
         return cell
     }

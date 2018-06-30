@@ -108,7 +108,7 @@ struct LyberItem {
     let low: Double
     let distance: Double
     let duration: Int
-    let estimatedArrival: String
+    let estimatedArrival: Int
     let product_id: String
 }
 
