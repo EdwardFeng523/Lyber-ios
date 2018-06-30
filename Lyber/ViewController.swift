@@ -284,6 +284,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
+        // Happens when user clicks on the table cell, call the deep link to direct to your uber/lyft app.
         if (items[indexPath.row].company == "uber") {
             let builder = RideParametersBuilder()
             let pickupLocation = CLLocation(latitude: fromCoord!.latitude, longitude: fromCoord!.longitude)

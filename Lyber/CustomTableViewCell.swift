@@ -21,11 +21,15 @@ class CustomTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    // Icon image
     @IBOutlet weak var iconDisplay: UIImageView!
     
+    // Price range label
     @IBOutlet weak var priceRange: UILabel!
     
+    // Estimate time label
     @IBOutlet weak var estimateTime: UILabel!
     
+    // Type label
     @IBOutlet weak var type: UILabel!
 }
