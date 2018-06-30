@@ -11,6 +11,7 @@ import GooglePlaces
 import UberCore
 import UberRides
 import GoogleMaps
+import CoreLocation
 
 
 
@@ -199,53 +200,11 @@ class ViewController: UIViewController
     
     // Do the two http requests.
     func sendRequest(depar_lat: String, depar_lng: String, dest_lat: String, dest_lng: String) {
-//        let jsonUrlStringUber = "https://lyber-server.herokuapp.com/api/uber?depar_lat=" + depar_lat + "&depar_lng=" + depar_lng + "&dest_lat=" + dest_lat + "&dest_lng=" + dest_lng
-//        let jsonUrlStringLyft = "https://lyber-server.herokuapp.com/api/lyft?depar_lat=" + depar_lat + "&depar_lng=" + depar_lng + "&dest_lat=" + dest_lat + "&dest_lng=" + dest_lng
-        
         let jsonUrlStringEstimate = "https://lyber-server.herokuapp.com/api/estimate?depar_lat=" + depar_lat + "&depar_lng=" + depar_lng + "&dest_lat=" + dest_lat + "&dest_lng=" + dest_lng
-        
-//        var uberFinished: Bool = false
-//        var lyftFinished: Bool = false
-    
-//        guard let urlUber = URL(string: jsonUrlStringUber) else { return }
-//        guard let urlLyft = URL(string: jsonUrlStringLyft) else { return }
+
         guard let urlEstimate = URL(string: jsonUrlStringEstimate) else { return }
         
         var lst: [LyberItem] = []
-        
-//        // The first request.
-//        URLSession.shared.dataTask(with: urlUber) { (data, response, err) in
-//            guard let data = data else { return }
-//            do {
-//                let uberInfo = try JSONDecoder().decode(UberInfo.self, from: data)
-//                print (uberInfo)
-//                for elementUber in uberInfo.prices {
-//                    let new_item = LyberItem(type: lyberType(type: elementUber.display_name) , description: lyberDescription(type: elementUber.display_name), priceRange: elementUber.estimate, high: Double(elementUber.high_estimate), low: Double(elementUber.low_estimate), distance: elementUber.distance, duration: elementUber.duration, estimatedArrival: "unavailable")
-//                    lst.append(new_item)
-//                }
-//                print ("uber lst appended")
-//                uberFinished = true
-//            } catch let jsonErr {
-//                print("Error serializing json uber:", jsonErr)
-//            }
-//        }.resume()
-//
-//        // The second request.
-//        URLSession.shared.dataTask(with: urlLyft) { (data, response, err) in
-//            guard let lyftData = data else { return }
-//            do {
-//                let lyftInfo = try JSONDecoder().decode(LyftInfo.self, from: lyftData)
-//                for elementLyft in lyftInfo.cost_estimates {
-//                    let new_item1 = LyberItem(type: lyberType(type: elementLyft.ride_type), description: lyberDescription(type: elementLyft.ride_type), priceRange: lyftPriceRange(low: elementLyft.estimated_cost_cents_min, high: elementLyft.estimated_cost_cents_max), high: Double(elementLyft.estimated_cost_cents_max), low: Double(elementLyft.estimated_cost_cents_min), distance: elementLyft.estimated_distance_miles, duration: elementLyft.estimated_duration_seconds, estimatedArrival: "unavailable")
-//                    lst.append(new_item1)
-//                }
-//                print ("lyft slst appended")
-//                print (lyftInfo)
-//                lyftFinished = true
-//            } catch let jsonErr {
-//                print("Error serializing json lyft:", jsonErr)
-//            }
-//        }.resume()
         
         spinner.startAnimating()
         URLSession.shared.dataTask(with: urlEstimate) { [weak self] (data, response, err) in
@@ -274,31 +233,8 @@ class ViewController: UIViewController
                 print ("Error serializing json Estimate:", jsonErr)
             }
         }.resume()
-        
-        
-//        // Do animation and started waiting for the response.
-//        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
-//            while (!uberFinished || !lyftFinished) {
-//            }
-//            guard let from_lat = self?.fromCoord!.latitude else {return }
-//            guard let from_lng = self?.fromCoord!.longitude else {return }
-//            guard let to_lat = self?.toCoord!.latitude else {return }
-//            guard let to_lng = self?.toCoord!.longitude else {return }
-//            if (String(from_lat) == depar_lat
-//                && String(to_lat) == dest_lat
-//                && String(from_lng) == depar_lng
-//                && String(to_lng) == dest_lng) {
-//                DispatchQueue.main.async {
-//                    // Go back to the main queue to update the gui.
-//                    self?.items = lst
-//                    self?.displayTable.separatorStyle = UITableViewCellSeparatorStyle.singleLine
-//                }
-//            }
-//
-//        }
-    }
 
-    
+    }
 }
 
 // As an extension for autocomplete view controller.
@@ -344,6 +280,17 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         
         cell.priceRange.text = items[indexPath.row].priceRange
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        if (items[indexPath.row].company == "uber") {
+            print ("got it!")
+            
+        } else {
+            lyft://partner=YOUR_CLIENT_ID
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        }
     }
 
 }
