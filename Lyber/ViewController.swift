@@ -29,9 +29,9 @@ class ViewController: UIViewController
     {
         didSet {
             if (fromCoord != nil) {
-                fromMarker.position = fromCoord!
-                (view.subviews[0] as? GMSMapView)?.animate(toLocation: fromCoord!)
-                print("from Marker:", fromMarker.position)
+//                fromMarker.position = fromCoord!
+//                (view.subviews[0] as? GMSMapView)?.animate(toLocation: fromCoord!)
+//                print("from Marker:", fromMarker.position)
             }
         }
     }
@@ -40,8 +40,8 @@ class ViewController: UIViewController
     {
         didSet {
             if (toCoord != nil) {
-                toMarker.position = toCoord!
-                (view.subviews[0] as? GMSMapView)?.animate(toLocation: toCoord!)
+//                toMarker.position = toCoord!
+//                (view.subviews[0] as? GMSMapView)?.animate(toLocation: toCoord!)
             }
         }
     }
@@ -99,11 +99,9 @@ class ViewController: UIViewController
         circle.map = mapView
         
         fromMarker.title = "From"
-        fromMarker.tracksViewChanges = true
         fromMarker.map = mapView
         
         toMarker.title = "To"
-        toMarker.tracksViewChanges = true
         toMarker.map = mapView
         self.displayTable.alpha = 0
         print ("View Did Load is called-=-=-=-=-=-=-=-=-=-=-=")
@@ -116,7 +114,6 @@ class ViewController: UIViewController
         if (toCoord != nil) {
             toMarker.position = toCoord!
         }
-        
     }
 
     override func didReceiveMemoryWarning() {
@@ -141,6 +138,7 @@ class ViewController: UIViewController
                 DispatchQueue.main.async {
                     self?.from.text = locationInfo.results[0].formatted_address
                     self?.fromCoord = self?.currentLoc.coordinate
+                    self?.fromMarker.position = (self?.fromCoord)!
                     (self?.view.subviews[0] as? GMSMapView)?.animate(toLocation: (self?.currentLoc.coordinate)!)
                 }
             } catch let jsonErr {
@@ -239,13 +237,24 @@ class ViewController: UIViewController
 
 // As an extension for autocomplete view controller.
 extension ViewController: GMSAutocompleteViewControllerDelegate {
+    // Autocomplete extension code
     func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
         if (fromPressed == true) {
-            from.text = place.name
-            self.fromCoord = place.coordinate
+            DispatchQueue.main.async { [weak self] in
+                self?.from.text = place.name
+                self?.fromCoord = place.coordinate
+                self?.fromMarker.position = place.coordinate
+                (self?.view.subviews[0] as? GMSMapView)?.animate(toLocation: place.coordinate)
+            }
+            
         } else {
-            to.text = place.name
-            self.toCoord = place.coordinate
+            DispatchQueue.main.async { [weak self] in
+                self?.to.text = place.name
+                self?.toCoord = place.coordinate
+                self?.toMarker.position = place.coordinate
+                (self?.view.subviews[0] as? GMSMapView)?.animate(toLocation: place.coordinate)
+            }
+            
         }
         fromPressed = false
         toPressed = false
@@ -291,7 +300,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             let dropoffLocation = CLLocation(latitude: toCoord!.latitude, longitude: toCoord!.longitude)
             builder.pickupLocation = pickupLocation
             builder.dropoffLocation = dropoffLocation
-            builder.dropoffNickname = "UberHQ"
+            builder.dropoffNickname = "Destination"
             builder.dropoffAddress = to.text!
             builder.productID = items[indexPath.row].product_id
             let rideParameters = builder.build()
