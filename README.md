@@ -46,15 +46,15 @@ By cliking the LYBER button, we see a table of all options.
 ![alt text](screenshots/calling.jpg "Launch Screen")
 ![alt text](screenshots/gotResult.jpg "Launch Screen")
 ```
-We can sort the options based on price by clicking the dollar image.
+We can sort the options based on price by clicking the dollar button.
 ```
 ![alt text](screenshots/sortByPrice.jpg "Launch Screen")
 ```
-Also we can sort based on waiting time by clicking the clock image.
+Also we can sort based on waiting time by clicking the clock button.
 ```
 ![alt text](screenshots/sortByTime.jpg "Launch Screen")
 ```
 After we choose the one we want to take, we press the table cell and it will direct us into the
-corresponding uber/lyft app.
+corresponding uber/lyft app with all options already set as defined in Lyber.
 ```
 ![alt text](screenshots/directToUber.jpg "Launch Screen")
