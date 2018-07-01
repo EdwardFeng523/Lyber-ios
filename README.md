@@ -22,4 +22,12 @@ Open the project using XCode. You can either run it on the simulator through XCo
 connected mobile device and run it on the device.
 ```
 
-![alt text](screenshots/desktop.jpg "Launch Screen")
+![alt text](screenshots/launchscreen.jpg "Launch Screen")
+![alt text](screenshots/main.jpg "Launch Screen")
+![alt text](screenshots/autoComplete.jpg "Launch Screen")
+![alt text](screenshots/from.jpg "Launch Screen")
+![alt text](screenshots/calling.jpg "Launch Screen")
+![alt text](screenshots/gotResult.jpg "Launch Screen")
+![alt text](screenshots/sortByPrice.jpg "Launch Screen")
+![alt text](screenshots/sortByTime.jpg "Launch Screen")
+![alt text](screenshots/directToUber.jpg "Launch Screen")
