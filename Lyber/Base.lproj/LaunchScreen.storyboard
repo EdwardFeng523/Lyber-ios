@@ -38,7 +38,6 @@
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="eKF-pM-La5" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="130" id="Asg-lU-Udp"/>
                             <constraint firstItem="eKF-pM-La5" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="nbV-ti-d7M"/>
                             <constraint firstItem="eKF-pM-La5" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="scw-Sg-QWK"/>
                         </constraints>

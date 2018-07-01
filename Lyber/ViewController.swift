@@ -28,12 +28,15 @@ class ViewController: UIViewController, GMSAutocompleteViewControllerDelegate
     var toCoord: CLLocationCoordinate2D? = nil
     
     // List of items for display and comparison.
-    var items: [LyberItem] = [] { didSet{
-        print ("items were set")
-        displayTable.reloadData()
-        spinner.stopAnimating()
-        self.displayTable.alpha = 0.8
-    } }
+    var items: [LyberItem] = []
+    {
+        didSet{
+            print ("items were set")
+            displayTable.reloadData()
+            spinner.stopAnimating()
+            self.displayTable.alpha = 0.8
+        }
+    }
     
     // The custom google map marker representing the user's current location.
     var circle = GMSMarker(position: CLLocationCoordinate2D(latitude: 0, longitude: 0))
@@ -134,6 +137,22 @@ class ViewController: UIViewController, GMSAutocompleteViewControllerDelegate
         displayTable.alpha = 0
     }
     
+    @IBAction func toTouched(_ sender: Any) {
+        let autocompleteControllerTo = GMSAutocompleteViewController()
+        autocompleteControllerTo.delegate = self
+        
+        toPressed = true
+        present(autocompleteControllerTo, animated: true, completion: nil)
+    }
+    
+    @IBAction func fromTouched(_ sender: Any) {
+        let autocompleteControllerFrom = GMSAutocompleteViewController()
+        autocompleteControllerFrom.delegate = self
+        
+        fromPressed = true
+        present(autocompleteControllerFrom, animated: true, completion: nil)
+    }
+    
     @IBAction func sortByPrice(_ sender: Any) {
         items.sort { (itemA, itemB) -> Bool in
             return itemA.low < itemB.low
@@ -147,25 +166,8 @@ class ViewController: UIViewController, GMSAutocompleteViewControllerDelegate
         }
         displayTable.reloadData()
     }
-    // From button triggers the autocomplete view controller.
-    @IBAction func fromButton(_ sender: Any) {
-        let autocompleteControllerFrom = GMSAutocompleteViewController()
-        autocompleteControllerFrom.delegate = self
-        
-        fromPressed = true
-        present(autocompleteControllerFrom, animated: true, completion: nil)
-    }
     
     @IBOutlet weak var to: UITextField!
-    
-    // To button triggers the autocomplete view controller.
-    @IBAction func toButton(_ sender: Any) {
-        let autocompleteControllerTo = GMSAutocompleteViewController()
-        autocompleteControllerTo.delegate = self
-        
-        toPressed = true
-        present(autocompleteControllerTo, animated: true, completion: nil)
-    }
     
     // Do the actual lyber call, make two http requests.
     @IBAction func lyber(_ sender: Any) {

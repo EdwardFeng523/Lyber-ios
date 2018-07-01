@@ -20,7 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     internal func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         LyftConfiguration.developer = (token: "OwF6Ts2Jl6imgk4+u09Eu+QscomJgIWvuxk9TEstjIiEwvS6HlnWcoI1+J8Or8NsXZwQra2/yHpXlaAfaurgf6QfbV+EXABmAd/sQf+jSZemZVO4YC3hF00=", clientId: "bYdbbVNFZ9d3")
-        GMSPlacesClient.provideAPIKey("AIzaSyB46_n3T1DLPzVboAIV6pJq6a3RODF_Ctg")
+        GMSPlacesClient.provideAPIKey("AIzaSyAg-s2u1gxtock_vf16pzHu-eh04je99qQ")
         GMSServices.provideAPIKey("AIzaSyAg-s2u1gxtock_vf16pzHu-eh04je99qQ")
         return true
     }
