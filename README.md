@@ -22,4 +22,4 @@ Open the project using XCode. You can either run it on the simulator through XCo
 connected mobile device and run it on the device.
 ```
 
-![alt text](screenshots/3541530421102_.pic.jpg "Launch Screen")
+![alt text](launchscreen.jpg "Launch Screen")
