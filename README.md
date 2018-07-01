@@ -54,6 +54,7 @@ Also we can sort based on waiting time by clicking the clock image.
 ```
 ![alt text](screenshots/sortByTime.jpg "Launch Screen")
 ```
-After we choose the one we want to take, we press the table cell and it will direct us into the corresponding uber/lyft app.
+After we choose the one we want to take, we press the table cell and it will direct us into the
+corresponding uber/lyft app.
 ```
 ![alt text](screenshots/directToUber.jpg "Launch Screen")
