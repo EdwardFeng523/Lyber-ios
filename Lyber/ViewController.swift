@@ -26,8 +26,35 @@ class ViewController: UIViewController, GMSAutocompleteViewControllerDelegate
     
     // Coordinates
     var fromCoord: CLLocationCoordinate2D? = nil
+    {
+        didSet{
+            self.fromMarker.opacity = 1
+            self.fromMarker.position = fromCoord!
+            if (self.toCoord != nil) {
+                let bounds = GMSCoordinateBounds(coordinate: fromCoord!, coordinate: toCoord!)
+                (self.view.subviews[0] as? GMSMapView)?.animate(with: GMSCameraUpdate.fit(bounds, withPadding: 100))
+                drawPath(startLocation: (fromCoord)!, endLocation: (toCoord)!)
+            } else {
+                (self.view.subviews[0] as? GMSMapView)?.animate(toLocation: fromCoord!)
+            }
+        }
+    }
     
     var toCoord: CLLocationCoordinate2D? = nil
+    {
+        didSet{
+            toMarker.position = toCoord!
+            toMarker.opacity = 1
+            if (fromCoord != nil) {
+                let bounds = GMSCoordinateBounds(coordinate: (fromCoord)!, coordinate: (toCoord)!)
+                print ("north east", bounds.northEast)
+                (self.view.subviews[0] as? GMSMapView)?.animate(with: GMSCameraUpdate.fit(bounds, withPadding: 100))
+                drawPath(startLocation: (fromCoord)!, endLocation: (toCoord)!)
+            } else {
+                (self.view.subviews[0] as? GMSMapView)?.animate(toLocation: toCoord!)
+            }
+        }
+    }
     
     var mapView: GMSMapView!
     
@@ -106,7 +133,7 @@ class ViewController: UIViewController, GMSAutocompleteViewControllerDelegate
             toMarker.position = toCoord!
         }
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         print ("This would rather never happen but you did receive a memory warning!")
@@ -129,14 +156,11 @@ class ViewController: UIViewController, GMSAutocompleteViewControllerDelegate
                 DispatchQueue.main.async {
                     self?.from.text = locationInfo.results[0].formatted_address
                     self?.fromCoord = self?.currentLoc.coordinate
-                    self?.fromMarker.opacity = 1
-                    self?.fromMarker.position = (self?.fromCoord)!
-                    (self?.view.subviews[0] as? GMSMapView)?.animate(toLocation: (self?.currentLoc.coordinate)!)
                 }
             } catch let jsonErr {
                 print("Error serializing json uber:", jsonErr)
             }
-        }.resume()
+            }.resume()
     }
     
     @IBAction func hideTable(_ sender: UIButton) {
@@ -194,6 +218,10 @@ class ViewController: UIViewController, GMSAutocompleteViewControllerDelegate
                 let json = try JSON(data: response.data!)
                 let routes = json["routes"].arrayValue
                 
+                for line in (self.polylines) {
+                    line.map = nil
+                }
+                
                 // print route using Polyline
                 for route in routes
                 {
@@ -229,7 +257,7 @@ class ViewController: UIViewController, GMSAutocompleteViewControllerDelegate
     // Do the two http requests.
     func sendRequest(depar_lat: String, depar_lng: String, dest_lat: String, dest_lng: String) {
         let jsonUrlStringEstimate = "https://lyber-server.herokuapp.com/api/estimate?depar_lat=" + depar_lat + "&depar_lng=" + depar_lng + "&dest_lat=" + dest_lat + "&dest_lng=" + dest_lng
-
+        
         guard let urlEstimate = URL(string: jsonUrlStringEstimate) else { return }
         
         var lst: [LyberItem] = []
@@ -260,8 +288,8 @@ class ViewController: UIViewController, GMSAutocompleteViewControllerDelegate
             } catch let jsonErr {
                 print ("Error serializing json Estimate:", jsonErr)
             }
-        }.resume()
-
+            }.resume()
+        
     }
     
     // GMSAutocomplet code
@@ -269,35 +297,12 @@ class ViewController: UIViewController, GMSAutocompleteViewControllerDelegate
         if (fromPressed == true) {
             DispatchQueue.main.async { [weak self] in
                 self?.from.text = place.name
-                self?.fromMarker.opacity = 1
                 self?.fromCoord = place.coordinate
-                self?.fromMarker.position = place.coordinate
-                if (self?.toCoord != nil) {
-                    let bounds = GMSCoordinateBounds(coordinate: (self?.fromCoord)!, coordinate: (self?.toCoord)!)
-                    (self?.view.subviews[0] as? GMSMapView)?.animate(with: GMSCameraUpdate.fit(bounds, withPadding: 100))
-                } else {
-                    (self?.view.subviews[0] as? GMSMapView)?.animate(toLocation: place.coordinate)
-                }
             }
         } else {
             DispatchQueue.main.async { [weak self] in
                 self?.to.text = place.name
                 self?.toCoord = place.coordinate
-                self?.toMarker.opacity = 1
-                self?.toMarker.position = place.coordinate
-                
-                if (self?.fromCoord != nil) {
-                    let bounds = GMSCoordinateBounds(coordinate: (self?.fromCoord)!, coordinate: (self?.toCoord)!)
-                    print ("north east", bounds.northEast)
-                    (self?.view.subviews[0] as? GMSMapView)?.animate(with: GMSCameraUpdate.fit(bounds, withPadding: 100))
-                    for line in (self?.polylines)! {
-                        line.map = nil
-                    }
-                    self?.drawPath(startLocation: (self?.fromCoord)!, endLocation: (self?.toCoord)!)
-                } else {
-                    (self?.view.subviews[0] as? GMSMapView)?.animate(toLocation: place.coordinate)
-                }
-                
             }
         }
         fromPressed = false
@@ -314,7 +319,7 @@ class ViewController: UIViewController, GMSAutocompleteViewControllerDelegate
         toPressed = false
         self.dismiss(animated: true, completion: nil)
     }
-
+    
 }
 
 // As an extension for UITableView
@@ -364,4 +369,3 @@ extension ViewController: CLLocationManagerDelegate {
         currentLoc = locations[0]
     }
 }
-
