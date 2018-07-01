@@ -12,6 +12,8 @@ import UberCore
 import UberRides
 import GoogleMaps
 import CoreLocation
+import Alamofire
+import SwiftyJSON
 
 class ViewController: UIViewController, GMSAutocompleteViewControllerDelegate
 {
@@ -26,6 +28,10 @@ class ViewController: UIViewController, GMSAutocompleteViewControllerDelegate
     var fromCoord: CLLocationCoordinate2D? = nil
     
     var toCoord: CLLocationCoordinate2D? = nil
+    
+    var mapView: GMSMapView!
+    
+    var polylines: [GMSPolyline] = []
     
     // List of items for display and comparison.
     var items: [LyberItem] = []
@@ -74,8 +80,8 @@ class ViewController: UIViewController, GMSAutocompleteViewControllerDelegate
         }
         
         let camera = GMSCameraPosition.camera(withLatitude: 29.76328, longitude: -95.36327, zoom: 12.0)
-        let mapView = GMSMapView.map(withFrame: CGRect(origin: CGPoint(x: 0,y: 0), size: CGSize(width: self.view.bounds.width, height: self.view.bounds.height)), camera: camera)
-        self.view.insertSubview(mapView, at: 0)
+        self.mapView = GMSMapView.map(withFrame: CGRect(origin: CGPoint(x: 0,y: 0), size: CGSize(width: self.view.bounds.width, height: self.view.bounds.height)), camera: camera)
+        self.view.insertSubview(self.mapView, at: 0)
         
         circle.icon = UIImage(named: "currentLoc")
         circle.map = mapView
@@ -169,6 +175,45 @@ class ViewController: UIViewController, GMSAutocompleteViewControllerDelegate
     
     @IBOutlet weak var to: UITextField!
     
+    func drawPath(startLocation: CLLocationCoordinate2D, endLocation: CLLocationCoordinate2D)
+    {
+        let origin = "\(startLocation.latitude),\(startLocation.longitude)"
+        let destination = "\(endLocation.latitude),\(endLocation.longitude)"
+        
+        
+        let url = "https://maps.googleapis.com/maps/api/directions/json?origin=\(origin)&destination=\(destination)&mode=driving"
+        
+        Alamofire.request(url).responseJSON { response in
+            
+            print(response.request as Any)  // original URL request
+            print(response.response as Any) // HTTP URL response
+            print(response.data as Any)     // server data
+            print(response.result as Any)   // result of response serialization
+            
+            do {
+                let json = try JSON(data: response.data!)
+                let routes = json["routes"].arrayValue
+                
+                // print route using Polyline
+                for route in routes
+                {
+                    let routeOverviewPolyline = route["overview_polyline"].dictionary
+                    let points = routeOverviewPolyline?["points"]?.stringValue
+                    let path = GMSPath.init(fromEncodedPath: points!)
+                    let polyline = GMSPolyline.init(path: path)
+                    polyline.strokeWidth = 4
+                    polyline.strokeColor = UIColor.black
+                    polyline.map = self.mapView
+                    self.polylines.append(polyline)
+                }
+            } catch {
+                print ("error drawing route")
+                return
+            }
+            
+        }
+    }
+    
     // Do the actual lyber call, make two http requests.
     @IBAction func lyber(_ sender: Any) {
         if (fromCoord == nil || toCoord == nil) {
@@ -245,6 +290,10 @@ class ViewController: UIViewController, GMSAutocompleteViewControllerDelegate
                     let bounds = GMSCoordinateBounds(coordinate: (self?.fromCoord)!, coordinate: (self?.toCoord)!)
                     print ("north east", bounds.northEast)
                     (self?.view.subviews[0] as? GMSMapView)?.animate(with: GMSCameraUpdate.fit(bounds, withPadding: 100))
+                    for line in (self?.polylines)! {
+                        line.map = nil
+                    }
+                    self?.drawPath(startLocation: (self?.fromCoord)!, endLocation: (self?.toCoord)!)
                 } else {
                     (self?.view.subviews[0] as? GMSMapView)?.animate(toLocation: place.coordinate)
                 }

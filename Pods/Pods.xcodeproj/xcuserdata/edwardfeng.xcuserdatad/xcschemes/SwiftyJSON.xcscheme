@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "8D0147FFA68D55C5288FDE23C7E89EF1"
-               BlueprintName = "UberRides"
+               BlueprintIdentifier = "3D6DA5CB55BBFC6808E62F9FD71EC470"
+               BlueprintName = "SwiftyJSON"
                ReferencedContainer = "container:Pods.xcodeproj"
-               BuildableName = "UberRides.framework">
+               BuildableName = "SwiftyJSON.framework">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
