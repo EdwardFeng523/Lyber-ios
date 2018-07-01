@@ -21,3 +21,5 @@ Having the latest version of XCode installed on your machine.
 Open the project using XCode. You can either run it on the simulator through XCode, or install it to a 
 connected mobile device and run it on the device.
 ```
+
+![alt text](screenshots/3541530421102_.pic.jpg "Launch Screen")
