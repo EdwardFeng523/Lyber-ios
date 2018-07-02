@@ -15,6 +15,10 @@
 		877FC33420CF67C600880906 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 877FC33220CF67C600880906 /* LaunchScreen.storyboard */; };
 		8788955320E018360090E083 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8788955220E018360090E083 /* Images.xcassets */; };
 		8790D64F20D0CF830033FDED /* GooglePlaces.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8790D64E20D0CF830033FDED /* GooglePlaces.framework */; };
+		87CC73F620E9E20300BF0E1F /* PersistenceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87CC73F520E9E20300BF0E1F /* PersistenceService.swift */; };
+		87CC73F920E9E46000BF0E1F /* Lyber.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 87CC73F720E9E46000BF0E1F /* Lyber.xcdatamodeld */; };
+		87CC73FC20E9E65C00BF0E1F /* Place+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87CC73FA20E9E65C00BF0E1F /* Place+CoreDataClass.swift */; };
+		87CC73FD20E9E65C00BF0E1F /* Place+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87CC73FB20E9E65C00BF0E1F /* Place+CoreDataProperties.swift */; };
 		F79E1352FA96BDC101305728 /* Pods_Lyber.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF5910D343BBACB65DB98B5B /* Pods_Lyber.framework */; };
 /* End PBXBuildFile section */
 
@@ -29,6 +33,10 @@
 		877FC33520CF67C600880906 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8788955220E018360090E083 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		8790D64E20D0CF830033FDED /* GooglePlaces.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GooglePlaces.framework; sourceTree = "<group>"; };
+		87CC73F520E9E20300BF0E1F /* PersistenceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceService.swift; sourceTree = "<group>"; };
+		87CC73F820E9E46000BF0E1F /* Lyber.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Lyber.xcdatamodel; sourceTree = "<group>"; };
+		87CC73FA20E9E65C00BF0E1F /* Place+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Place+CoreDataClass.swift"; path = "/Users/edwardfeng/ios/Lyber/Lyber/Place+CoreDataClass.swift"; sourceTree = "<absolute>"; };
+		87CC73FB20E9E65C00BF0E1F /* Place+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Place+CoreDataProperties.swift"; path = "/Users/edwardfeng/ios/Lyber/Lyber/Place+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
 		8A726615DF8B8E450224C3AC /* Pods-Lyber.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Lyber.release.xcconfig"; path = "Pods/Target Support Files/Pods-Lyber/Pods-Lyber.release.xcconfig"; sourceTree = "<group>"; };
 		B21B1805D0D501C136D4AA69 /* Pods-Lyber.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Lyber.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Lyber/Pods-Lyber.debug.xcconfig"; sourceTree = "<group>"; };
 		FF5910D343BBACB65DB98B5B /* Pods_Lyber.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Lyber.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -77,6 +85,8 @@
 		877FC32820CF67C500880906 /* Lyber */ = {
 			isa = PBXGroup;
 			children = (
+				87CC73FA20E9E65C00BF0E1F /* Place+CoreDataClass.swift */,
+				87CC73FB20E9E65C00BF0E1F /* Place+CoreDataProperties.swift */,
 				877FC32920CF67C500880906 /* AppDelegate.swift */,
 				877FC32B20CF67C500880906 /* ViewController.swift */,
 				877FC32D20CF67C500880906 /* Main.storyboard */,
@@ -86,6 +96,8 @@
 				8790D64E20D0CF830033FDED /* GooglePlaces.framework */,
 				8700C75620D21AEF00431022 /* getInfo.swift */,
 				8788955220E018360090E083 /* Images.xcassets */,
+				87CC73F520E9E20300BF0E1F /* PersistenceService.swift */,
+				87CC73F720E9E46000BF0E1F /* Lyber.xcdatamodeld */,
 			);
 			path = Lyber;
 			sourceTree = "<group>";
@@ -241,6 +253,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				87CC73F920E9E46000BF0E1F /* Lyber.xcdatamodeld in Sources */,
+				87CC73FD20E9E65C00BF0E1F /* Place+CoreDataProperties.swift in Sources */,
+				87CC73F620E9E20300BF0E1F /* PersistenceService.swift in Sources */,
+				87CC73FC20E9E65C00BF0E1F /* Place+CoreDataClass.swift in Sources */,
 				877FC32C20CF67C500880906 /* ViewController.swift in Sources */,
 				877FC32A20CF67C500880906 /* AppDelegate.swift in Sources */,
 				87668D8320D8984D004C58C0 /* CustomTableViewCell.swift in Sources */,
@@ -454,6 +470,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		87CC73F720E9E46000BF0E1F /* Lyber.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				87CC73F820E9E46000BF0E1F /* Lyber.xcdatamodel */,
+			);
+			currentVersion = 87CC73F820E9E46000BF0E1F /* Lyber.xcdatamodel */;
+			path = Lyber.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 877FC31E20CF67C500880906 /* Project object */;
 }

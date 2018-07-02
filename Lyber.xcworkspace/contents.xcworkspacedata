@@ -2,6 +2,12 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:/Users/edwardfeng/ios/Lyber/Lyber/Place+CoreDataClass.swift">
+   </FileRef>
+   <FileRef
+      location = "group:/Users/edwardfeng/ios/Lyber/Lyber/Place+CoreDataProperties.swift">
+   </FileRef>
+   <FileRef
       location = "group:Lyber.xcodeproj">
    </FileRef>
    <FileRef
