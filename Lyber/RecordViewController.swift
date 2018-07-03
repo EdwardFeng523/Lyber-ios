@@ -64,6 +64,7 @@ class RecordViewController: UIViewController, GMSAutocompleteViewControllerDeleg
             DispatchQueue.main.async { [weak self] in
                 self?.blueTxt.text = place.name
                 self?.blueCoord = place.coordinate
+                self?.checkAndDelete(tag: "blue")
                 let placeToSave = Place(context: PersistenceService.context)
                 placeToSave.tag = "blue"
                 placeToSave.name = place.name
@@ -75,6 +76,7 @@ class RecordViewController: UIViewController, GMSAutocompleteViewControllerDeleg
             DispatchQueue.main.async { [weak self] in
                 self?.redTxt.text = place.name
                 self?.redCoord = place.coordinate
+                self?.checkAndDelete(tag: "red")
                 let placeToSave = Place(context: PersistenceService.context)
                 placeToSave.tag = "red"
                 placeToSave.name = place.name
@@ -110,6 +112,15 @@ class RecordViewController: UIViewController, GMSAutocompleteViewControllerDeleg
         } catch {
         }
         return places
+    }
+    
+    func checkAndDelete(tag: String) {
+        let result = fetchPlace(tag: tag)
+        if (!result.isEmpty) {
+            for ele in result {
+                PersistenceService.context.delete(ele)
+            }
+        }
     }
 
 }
