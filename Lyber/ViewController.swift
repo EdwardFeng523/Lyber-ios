@@ -139,6 +139,54 @@ class ViewController: UIViewController, GMSAutocompleteViewControllerDelegate
         print ("This would rather never happen but you did receive a memory warning!")
     }
     
+    // Get saved locations
+    
+    @IBAction func fromBlue(_ sender: Any) {
+        let result = RecordViewController.fetchPlace(tag: "blue")
+        if result.count == 0 {
+            
+        } else {
+            from.text = result[0].name
+            fromCoord = CLLocationCoordinate2D(latitude: result[0].lat, longitude: result[0].lng)
+        }
+    }
+    
+    @IBAction func fromRed(_ sender: Any) {
+        let result = RecordViewController.fetchPlace(tag: "red")
+        if result.count == 0 {
+            
+        } else {
+            from.text = result[0].name
+            fromCoord = CLLocationCoordinate2D(latitude: result[0].lat, longitude: result[0].lng)
+        }
+    }
+    
+    @IBAction func toBlue(_ sender: Any) {
+        let result = RecordViewController.fetchPlace(tag: "blue")
+        if result.count == 0 {
+            
+        } else {
+            to.text = result[0].name
+            toCoord = CLLocationCoordinate2D(latitude: result[0].lat, longitude: result[0].lng)
+        }
+    }
+    
+    @IBAction func toRed(_ sender: Any) {
+        let result = RecordViewController.fetchPlace(tag: "red")
+        if result.count == 0 {
+            
+        } else {
+            to.text = result[0].name
+            toCoord = CLLocationCoordinate2D(latitude: result[0].lat, longitude: result[0].lng)
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
     
     @IBOutlet weak var from: UITextField!
     

@@ -187,21 +187,33 @@
                                         <rect key="frame" x="193" y="38" width="30" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <state key="normal" image="saved1"/>
+                                        <connections>
+                                            <action selector="fromBlue:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Hj0-Ex-BUy"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GLc-f1-AFS">
                                         <rect key="frame" x="219" y="38" width="30" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <state key="normal" image="saved2"/>
+                                        <connections>
+                                            <action selector="fromRed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="h8h-KD-7UU"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Czp-DN-z3d">
                                         <rect key="frame" x="193" y="80" width="30" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <state key="normal" image="saved1"/>
+                                        <connections>
+                                            <action selector="toBlue:" destination="BYZ-38-t0r" eventType="touchUpInside" id="3xK-eD-Egf"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sC5-ke-qCK">
                                         <rect key="frame" x="219" y="80" width="30" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <state key="normal" image="saved2"/>
+                                        <connections>
+                                            <action selector="toRed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="t7O-cu-KEv"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.99162976823225346" green="1" blue="0.99696541013986617" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

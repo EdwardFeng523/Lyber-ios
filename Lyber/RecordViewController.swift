@@ -41,12 +41,12 @@ class RecordViewController: UIViewController, GMSAutocompleteViewControllerDeleg
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let redResult = fetchPlace(tag: "red")
+        let redResult = RecordViewController.fetchPlace(tag: "red")
         if (redResult.count != 0) {
             redTxt.text = redResult[0].name
             redCoord = CLLocationCoordinate2D(latitude: redResult[0].lat, longitude: redResult[0].lng)
         }
-        let blueResult = fetchPlace(tag: "blue")
+        let blueResult = RecordViewController.fetchPlace(tag: "blue")
         if (blueResult.count != 0) {
             blueTxt.text = blueResult[0].name
             blueCoord = CLLocationCoordinate2D(latitude: blueResult[0].lat, longitude: blueResult[0].lng)
@@ -64,7 +64,7 @@ class RecordViewController: UIViewController, GMSAutocompleteViewControllerDeleg
             DispatchQueue.main.async { [weak self] in
                 self?.blueTxt.text = place.name
                 self?.blueCoord = place.coordinate
-                self?.checkAndDelete(tag: "blue")
+                RecordViewController.checkAndDelete(tag: "blue")
                 let placeToSave = Place(context: PersistenceService.context)
                 placeToSave.tag = "blue"
                 placeToSave.name = place.name
@@ -76,7 +76,7 @@ class RecordViewController: UIViewController, GMSAutocompleteViewControllerDeleg
             DispatchQueue.main.async { [weak self] in
                 self?.redTxt.text = place.name
                 self?.redCoord = place.coordinate
-                self?.checkAndDelete(tag: "red")
+                RecordViewController.checkAndDelete(tag: "red")
                 let placeToSave = Place(context: PersistenceService.context)
                 placeToSave.tag = "red"
                 placeToSave.name = place.name
@@ -101,7 +101,7 @@ class RecordViewController: UIViewController, GMSAutocompleteViewControllerDeleg
     }
     
     // Fetching places
-    func fetchPlace(tag: String) -> [Place] {
+    static func fetchPlace(tag: String) -> [Place] {
         let fetchRequest: NSFetchRequest<Place> = Place.fetchRequest()
         let predicate = NSPredicate(format: "tag = %@", tag)
         fetchRequest.predicate = predicate
@@ -114,7 +114,7 @@ class RecordViewController: UIViewController, GMSAutocompleteViewControllerDeleg
         return places
     }
     
-    func checkAndDelete(tag: String) {
+    static func checkAndDelete(tag: String) {
         let result = fetchPlace(tag: tag)
         if (!result.isEmpty) {
             for ele in result {
