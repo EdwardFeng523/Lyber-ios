@@ -117,12 +117,14 @@ class ViewController: UIViewController, GMSAutocompleteViewControllerDelegate
         fromMarker.icon = UIImage(named: "marker")
         fromMarker.map = mapView
         fromMarker.opacity = 0
+        fromMarker.isDraggable = true
         
         toMarker.title = "To"
         toMarker.icon = UIImage(named: "marker")
         toMarker.map = mapView
         toMarker.opacity = 1
         self.displayTable.alpha = 0
+        mapView.delegate = self
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -415,5 +417,36 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
 extension ViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         currentLoc = locations[0]
+    }
+}
+
+extension ViewController: GMSMapViewDelegate {
+    func mapView(_ mapView: GMSMapView, didBeginDragging marker: GMSMarker) {
+        print ("beginned dragging")
+    }
+    
+    func mapView(_ mapView: GMSMapView, didDrag marker: GMSMarker) {
+        print ("is being dragged")
+    }
+    
+    func mapView(_ mapView: GMSMapView, didEndDragging marker: GMSMarker) {
+        print ("is done dragging")
+        let jsonUrlStringLoc = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + String(marker.position.latitude) + "," + String(marker.position.longitude) + "&key=AIzaSyAg-s2u1gxtock_vf16pzHu-eh04je99qQ"
+        guard let urlLoc = URL(string: jsonUrlStringLoc) else { return }
+        
+        URLSession.shared.dataTask(with: urlLoc) { [weak self] (data, response, err) in
+            guard let data = data else { return }
+            do {
+                let locationInfo = try JSONDecoder().decode(LocationInfo.self, from: data)
+                print("results:" , locationInfo)
+                print(locationInfo.results[0].formatted_address)
+                DispatchQueue.main.async {
+                    self?.from.text = locationInfo.results[0].formatted_address
+                    self?.fromCoord = marker.position
+                }
+            } catch let jsonErr {
+                print("Error serializing json uber:", jsonErr)
+            }
+            }.resume()
     }
 }
