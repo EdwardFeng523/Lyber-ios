@@ -24,6 +24,8 @@ class ViewController: UIViewController, GMSAutocompleteViewControllerDelegate
     var fromMarker = GMSMarker(position: CLLocationCoordinate2D(latitude: 0, longitude: 0))
     var toMarker = GMSMarker(position: CLLocationCoordinate2D(latitude: 0, longitude: 0))
     
+    var sortedByTime: Bool = false
+    
     // Coordinates
     var fromCoord: CLLocationCoordinate2D? = nil
     {
@@ -220,6 +222,9 @@ class ViewController: UIViewController, GMSAutocompleteViewControllerDelegate
     @IBAction func toTouched(_ sender: Any) {
         let autocompleteControllerTo = GMSAutocompleteViewController()
         autocompleteControllerTo.delegate = self
+        let filter = GMSAutocompleteFilter()
+        filter.country = "US"
+        autocompleteControllerTo.autocompleteFilter = filter
         
         toPressed = true
         present(autocompleteControllerTo, animated: true, completion: nil)
@@ -228,6 +233,11 @@ class ViewController: UIViewController, GMSAutocompleteViewControllerDelegate
     @IBAction func fromTouched(_ sender: Any) {
         let autocompleteControllerFrom = GMSAutocompleteViewController()
         autocompleteControllerFrom.delegate = self
+        let filter = GMSAutocompleteFilter()
+        filter.country = "US"
+        
+        autocompleteControllerFrom.autocompleteFilter = filter
+
         
         fromPressed = true
         present(autocompleteControllerFrom, animated: true, completion: nil)
@@ -235,9 +245,14 @@ class ViewController: UIViewController, GMSAutocompleteViewControllerDelegate
     
     @IBAction func sortByPrice(_ sender: Any) {
         items.sort { (itemA, itemB) -> Bool in
-            return itemA.low < itemB.low
+            if (itemA.low != itemB.low) {
+                return itemA.low < itemB.low
+            } else {
+                return itemA.high < itemB.high
+            }
         }
         displayTable.reloadData()
+        sortedByTime = false
     }
     
     @IBAction func sortByTime(_ sender: Any) {
@@ -245,6 +260,7 @@ class ViewController: UIViewController, GMSAutocompleteViewControllerDelegate
             return itemA.estimatedArrival < itemB.estimatedArrival
         }
         displayTable.reloadData()
+        sortedByTime = true
     }
     
     @IBOutlet weak var to: UITextField!
@@ -332,13 +348,14 @@ class ViewController: UIViewController, GMSAutocompleteViewControllerDelegate
                     DispatchQueue.main.async {
                         // Go back to the main queue to update the gui.
                         self?.items = lst
-                        self?.displayTable.separatorStyle = UITableViewCellSeparatorStyle.singleLine
+                        self?.sortByPrice(lst)
+                        self?.sortedByTime = false
                     }
                 }
             } catch let jsonErr {
                 print ("Error serializing json Estimate:", jsonErr)
             }
-            }.resume()
+        }.resume()
         
     }
     
