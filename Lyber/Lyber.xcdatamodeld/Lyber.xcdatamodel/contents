@@ -10,8 +10,11 @@
         <attribute name="company" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="dep_lat" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="dep_lng" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="dep_name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="dest_lat" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="dest_lng" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="dest_name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="eta" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="price_max" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="price_min" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="priority" optional="YES" attributeType="String" syncable="YES"/>
@@ -19,9 +22,10 @@
         <attribute name="time_stamp" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="user_lat" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="user_lng" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="uuid" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
         <element name="Place" positionX="-54" positionY="-9" width="128" height="105"/>
-        <element name="Record" positionX="-54" positionY="18" width="128" height="225"/>
+        <element name="Record" positionX="-54" positionY="18" width="128" height="285"/>
     </elements>
 </model>
