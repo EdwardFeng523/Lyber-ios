@@ -77,6 +77,16 @@ struct LyberItem {
     let duration: Int
     let estimatedArrival: Int
     let product_id: String
+    let display_name: String
+}
+
+struct History {
+    let dep: String
+    let dest: String
+    let time: NSDate
+    let high: Double
+    let low: Double
+    let display_name: String
 }
 
 func lyftPriceRange(low: Int, high: Int) -> String {

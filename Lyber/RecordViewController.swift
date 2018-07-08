@@ -15,11 +15,15 @@ class RecordViewController: UIViewController, GMSAutocompleteViewControllerDeleg
     var blue = false
     var red = false
     
+    var history: [Record] = []
+    
     @IBOutlet weak var blueTxt: UITextField!
     
     var blueCoord: CLLocationCoordinate2D!
     
     @IBOutlet weak var redTxt: UITextField!
+    
+    @IBOutlet weak var recordTable: UITableView!
     
     var redCoord: CLLocationCoordinate2D!
     
@@ -41,6 +45,8 @@ class RecordViewController: UIViewController, GMSAutocompleteViewControllerDeleg
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        recordTable.delegate = self
+        recordTable.dataSource = self
         let redResult = RecordViewController.fetchPlace(tag: "red")
         if (redResult.count != 0) {
             redTxt.text = redResult[0].name
@@ -50,6 +56,10 @@ class RecordViewController: UIViewController, GMSAutocompleteViewControllerDeleg
         if (blueResult.count != 0) {
             blueTxt.text = blueResult[0].name
             blueCoord = CLLocationCoordinate2D(latitude: blueResult[0].lat, longitude: blueResult[0].lng)
+        }
+        history = RecordViewController.fetchRecord()
+        history.sort { (record1, record2) -> Bool in
+            return record1.time_stamp?.compare(record2.time_stamp! as Date) == ComparisonResult.orderedAscending
         }
     }
 
@@ -114,6 +124,18 @@ class RecordViewController: UIViewController, GMSAutocompleteViewControllerDeleg
         return places
     }
     
+    // Fetching records
+    static func fetchRecord() -> [Record] {
+        let fetchRequest: NSFetchRequest<Record> = Record.fetchRequest()
+        var records : [Record] = []
+        do {
+            records = try PersistenceService.context.fetch(fetchRequest)
+            
+        } catch {
+        }
+        return records
+    }
+    
     static func checkAndDelete(tag: String) {
         let result = fetchPlace(tag: tag)
         if (!result.isEmpty) {
@@ -123,4 +145,14 @@ class RecordViewController: UIViewController, GMSAutocompleteViewControllerDeleg
         }
     }
 
+}
+
+extension RecordViewController: UITableViewDataSource, UITableViewDelegate {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return history.count
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+    }
 }

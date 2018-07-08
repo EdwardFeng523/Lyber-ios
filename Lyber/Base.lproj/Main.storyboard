@@ -126,6 +126,7 @@
                     <tabBarItem key="tabBarItem" title="Saved" id="5ix-g6-qRv"/>
                     <connections>
                         <outlet property="blueTxt" destination="9BL-jC-Aq3" id="OPr-BL-FLX"/>
+                        <outlet property="recordTable" destination="9lp-3e-HXU" id="LhR-mm-KXM"/>
                         <outlet property="redTxt" destination="nzY-r4-h2F" id="oH0-Hi-P9n"/>
                     </connections>
                 </viewController>

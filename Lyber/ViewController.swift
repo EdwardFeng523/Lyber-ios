@@ -238,7 +238,6 @@ class ViewController: UIViewController, GMSAutocompleteViewControllerDelegate
         
         autocompleteControllerFrom.autocompleteFilter = filter
 
-        
         fromPressed = true
         present(autocompleteControllerFrom, animated: true, completion: nil)
     }
@@ -334,7 +333,7 @@ class ViewController: UIViewController, GMSAutocompleteViewControllerDelegate
             do {
                 let estimateInfo = try JSONDecoder().decode(ServerEstimate.self, from: estimateData)
                 for elementInfo in estimateInfo.prices {
-                    let new_item_estimate = LyberItem(company: elementInfo.company, type: lyberType(type: elementInfo.display_name), description: lyberDescription(type: elementInfo.display_name), priceRange: lyftPriceRange(low: elementInfo.min_estimate, high: elementInfo.max_estimate), high: Double(elementInfo.max_estimate), low: Double(elementInfo.min_estimate), distance: elementInfo.distance, duration: elementInfo.duration, estimatedArrival: elementInfo.eta / 60, product_id: elementInfo.product_id)
+                    let new_item_estimate = LyberItem(company: elementInfo.company, type: lyberType(type: elementInfo.display_name), description: lyberDescription(type: elementInfo.display_name), priceRange: lyftPriceRange(low: elementInfo.min_estimate, high: elementInfo.max_estimate), high: Double(elementInfo.max_estimate), low: Double(elementInfo.min_estimate), distance: elementInfo.distance, duration: elementInfo.duration, estimatedArrival: elementInfo.eta / 60, product_id: elementInfo.product_id, display_name: elementInfo.display_name)
                     lst.append(new_item_estimate)
                 }
                 guard let from_lat = self?.fromCoord!.latitude else {return }
@@ -409,6 +408,8 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         // Happens when user clicks on the table cell, call the deep link to direct to your uber/lyft app.
+        let target = items[indexPath.row]
+        
         if (items[indexPath.row].company == "uber") {
             let builder = RideParametersBuilder()
             let pickupLocation = CLLocation(latitude: fromCoord!.latitude, longitude: fromCoord!.longitude)
@@ -427,6 +428,31 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             guard let lyftDeepLink = URL(string: lyftDeepLinkStr) else { return }
             UIApplication.shared.open(lyftDeepLink, options: [:], completionHandler: nil)
         }
+        
+        let recordToSave = Record(context: PersistenceService.context)
+        recordToSave.company = target.company
+        recordToSave.price_max = target.high
+        recordToSave.price_min = target.low
+        recordToSave.priority = sortedByTime ? "time" : "price"
+        recordToSave.dep_lat = (fromCoord?.latitude)!
+        recordToSave.dep_lng = (fromCoord?.longitude)!
+        recordToSave.dest_lat = (toCoord?.latitude)!
+        recordToSave.dest_lng = (toCoord?.longitude)!
+        recordToSave.dep_name = from.text!
+        recordToSave.dest_name = to.text!
+        recordToSave.uuid = ""
+        recordToSave.user_lat = currentLoc.coordinate.latitude
+        recordToSave.user_lng = currentLoc.coordinate.longitude
+        recordToSave.eta = Int32(target.estimatedArrival)
+        recordToSave.real_price = 0.0
+        recordToSave.product = target.display_name
+        let now = NSDate()
+//        let formatter = DateFormatter()
+//        formatter.timeZone = TimeZone.current
+//        formatter.dateFormat = "yyyy-MM-dd HH:mm"
+//        let dateString = formatter.string(from: now)
+        recordToSave.time_stamp = now
+        PersistenceService.saveContext()
     }
 }
 
