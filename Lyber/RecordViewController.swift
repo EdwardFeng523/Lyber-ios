@@ -17,6 +17,13 @@ class RecordViewController: UIViewController, GMSAutocompleteViewControllerDeleg
     
     var history: [Record] = []
     
+    lazy var refresher: UIRefreshControl = {
+        let refreshControl = UIRefreshControl()
+        refreshControl.tintColor = .blue
+        refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
+        return refreshControl
+    }()
+    
     @IBOutlet weak var blueTxt: UITextField!
     
     var blueCoord: CLLocationCoordinate2D!
@@ -57,6 +64,7 @@ class RecordViewController: UIViewController, GMSAutocompleteViewControllerDeleg
             blueTxt.text = blueResult[0].name
             blueCoord = CLLocationCoordinate2D(latitude: blueResult[0].lat, longitude: blueResult[0].lng)
         }
+        self.recordTable.refreshControl = refresher
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -147,6 +155,16 @@ class RecordViewController: UIViewController, GMSAutocompleteViewControllerDeleg
                 PersistenceService.context.delete(ele)
             }
         }
+    }
+    
+    @objc
+    func refreshData() {
+        self.history = RecordViewController.fetchRecord()
+        history.sort { (record1, record2) -> Bool in
+            return record1.time_stamp?.compare(record2.time_stamp! as Date) == ComparisonResult.orderedDescending
+        }
+        recordTable.reloadData()
+        refresher.endRefreshing()
     }
 
 }

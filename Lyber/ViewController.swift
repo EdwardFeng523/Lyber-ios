@@ -116,7 +116,7 @@ class ViewController: UIViewController, GMSAutocompleteViewControllerDelegate
         circle.map = mapView
         
         fromMarker.title = "From"
-        fromMarker.icon = UIImage(named: "marker")
+        fromMarker.icon = UIImage(named: "dep_marker")
         fromMarker.map = mapView
         fromMarker.opacity = 0
         fromMarker.isDraggable = true
