@@ -10,6 +10,7 @@
 		8700C75720D21AEF00431022 /* getInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8700C75620D21AEF00431022 /* getInfo.swift */; };
 		87643ACE20F197BF00BC8AFB /* Record+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87643ACC20F197BF00BC8AFB /* Record+CoreDataProperties.swift */; };
 		87643ACF20F197BF00BC8AFB /* Record+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87643ACD20F197BF00BC8AFB /* Record+CoreDataClass.swift */; };
+		87643AD120F1AD6000BC8AFB /* RecordTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87643AD020F1AD6000BC8AFB /* RecordTableViewCell.swift */; };
 		87668D8320D8984D004C58C0 /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87668D8220D8984D004C58C0 /* CustomTableViewCell.swift */; };
 		877FC32A20CF67C500880906 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877FC32920CF67C500880906 /* AppDelegate.swift */; };
 		877FC32C20CF67C500880906 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877FC32B20CF67C500880906 /* ViewController.swift */; };
@@ -29,6 +30,7 @@
 		8700C75620D21AEF00431022 /* getInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = getInfo.swift; sourceTree = "<group>"; };
 		87643ACC20F197BF00BC8AFB /* Record+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Record+CoreDataProperties.swift"; path = "/Users/edwardfeng/ios/Lyber/Lyber/Record+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
 		87643ACD20F197BF00BC8AFB /* Record+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Record+CoreDataClass.swift"; path = "/Users/edwardfeng/ios/Lyber/Lyber/Record+CoreDataClass.swift"; sourceTree = "<absolute>"; };
+		87643AD020F1AD6000BC8AFB /* RecordTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordTableViewCell.swift; sourceTree = "<group>"; };
 		87668D8220D8984D004C58C0 /* CustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableViewCell.swift; sourceTree = "<group>"; };
 		877FC32620CF67C500880906 /* Lyber.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Lyber.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		877FC32920CF67C500880906 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -107,6 +109,7 @@
 				87CC73F520E9E20300BF0E1F /* PersistenceService.swift */,
 				87CC73F720E9E46000BF0E1F /* Lyber.xcdatamodeld */,
 				87BBC73A20EB06AA007E51BF /* RecordViewController.swift */,
+				87643AD020F1AD6000BC8AFB /* RecordTableViewCell.swift */,
 			);
 			path = Lyber;
 			sourceTree = "<group>";
@@ -264,6 +267,7 @@
 			files = (
 				87643ACE20F197BF00BC8AFB /* Record+CoreDataProperties.swift in Sources */,
 				87CC73F920E9E46000BF0E1F /* Lyber.xcdatamodeld in Sources */,
+				87643AD120F1AD6000BC8AFB /* RecordTableViewCell.swift in Sources */,
 				87CC73FD20E9E65C00BF0E1F /* Place+CoreDataProperties.swift in Sources */,
 				87CC73F620E9E20300BF0E1F /* PersistenceService.swift in Sources */,
 				87BBC73B20EB06AA007E51BF /* RecordViewController.swift in Sources */,

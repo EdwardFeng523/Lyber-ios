@@ -447,10 +447,6 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         recordToSave.real_price = 0.0
         recordToSave.product = target.display_name
         let now = NSDate()
-//        let formatter = DateFormatter()
-//        formatter.timeZone = TimeZone.current
-//        formatter.dateFormat = "yyyy-MM-dd HH:mm"
-//        let dateString = formatter.string(from: now)
         recordToSave.time_stamp = now
         PersistenceService.saveContext()
     }

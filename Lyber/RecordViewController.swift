@@ -57,9 +57,13 @@ class RecordViewController: UIViewController, GMSAutocompleteViewControllerDeleg
             blueTxt.text = blueResult[0].name
             blueCoord = CLLocationCoordinate2D(latitude: blueResult[0].lat, longitude: blueResult[0].lng)
         }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         history = RecordViewController.fetchRecord()
         history.sort { (record1, record2) -> Bool in
-            return record1.time_stamp?.compare(record2.time_stamp! as Date) == ComparisonResult.orderedAscending
+            return record1.time_stamp?.compare(record2.time_stamp! as Date) == ComparisonResult.orderedDescending
         }
     }
 
@@ -153,6 +157,21 @@ extension RecordViewController: UITableViewDataSource, UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "recordCell") as! RecordTableViewCell
+        let time = history[indexPath.row].time_stamp! as Date
+        let formatter = DateFormatter()
+        formatter.timeZone = TimeZone.current
+        formatter.dateFormat = "yyyy-MM-dd HH:mm"
+        let dateString = formatter.string(from: time)
+        cell.time.text = dateString
+        cell.type.text = history[indexPath.row].product
+        cell.price.text = lyftPriceRange(low: Int(history[indexPath.row].price_min), high: Int(history[indexPath.row].price_max))
+        cell.from.text = history[indexPath.row].dep_name
+        cell.to.text = history[indexPath.row].dest_name
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 90
     }
 }
