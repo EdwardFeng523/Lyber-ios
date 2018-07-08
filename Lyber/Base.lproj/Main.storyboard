@@ -29,7 +29,7 @@
             </objects>
             <point key="canvasLocation" x="-1796" y="27"/>
         </scene>
-        <!--Saved-->
+        <!--Record & Saved Places-->
         <scene sceneID="tP6-Uj-ecE">
             <objects>
                 <viewController id="xXz-5B-nqB" customClass="RecordViewController" customModule="Lyber" customModuleProvider="target" sceneMemberID="viewController">
@@ -143,7 +143,7 @@
                                                     </constraints>
                                                 </stackView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="To" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tcz-xf-Igw">
-                                                    <rect key="frame" x="156" y="38" width="199" height="21"/>
+                                                    <rect key="frame" x="156" y="38.5" width="199" height="20.5"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="199" id="K3c-5S-NaY"/>
                                                     </constraints>
@@ -195,7 +195,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="lQZ-wT-NFE"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Saved" id="5ix-g6-qRv"/>
+                    <tabBarItem key="tabBarItem" title="Record &amp; Saved Places" image="savedView" id="5ix-g6-qRv"/>
                     <connections>
                         <outlet property="blueTxt" destination="9BL-jC-Aq3" id="OPr-BL-FLX"/>
                         <outlet property="recordTable" destination="9lp-3e-HXU" id="LhR-mm-KXM"/>
@@ -206,7 +206,7 @@
             </objects>
             <point key="canvasLocation" x="-834.39999999999998" y="322.48875562218893"/>
         </scene>
-        <!--Main-->
+        <!--Estimate & Request-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Lyber" customModuleProvider="target" sceneMemberID="viewController">
@@ -452,7 +452,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Main" id="mNt-SU-Oyr"/>
+                    <tabBarItem key="tabBarItem" title="Estimate &amp; Request" image="mainView" id="mNt-SU-Oyr"/>
                     <connections>
                         <outlet property="displayTable" destination="Cq7-eO-BcK" id="jCA-zU-CFt"/>
                         <outlet property="from" destination="O5M-1X-Hy5" id="zHh-Tm-GMC"/>
@@ -467,7 +467,9 @@
     </scenes>
     <resources>
         <image name="location" width="30" height="30"/>
+        <image name="mainView" width="30" height="30"/>
         <image name="saved1" width="30" height="30"/>
         <image name="saved2" width="30" height="30"/>
+        <image name="savedView" width="30" height="30"/>
     </resources>
 </document>

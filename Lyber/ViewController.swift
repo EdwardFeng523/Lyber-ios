@@ -461,19 +461,10 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-//        let encodedData = try? JSONEncoder().encode(log)
-        
-//        if let data = encodedData {
-//            if let httpBody = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) {
-//                print("Record JSON:\n" + String(describing: httpBody) + "\n")
-//
-//            }
-//        }
 
         guard let httpBody = try? JSONSerialization.data(withJSONObject: log, options: []) else { return }
         request.httpBody = httpBody
-        print ("http Body")
-        print (try? JSONSerialization.jsonObject(with: httpBody, options: []))
+        
         let session = URLSession.shared
         session.dataTask(with: request) { (data, response, error) in
             if let response = response {
