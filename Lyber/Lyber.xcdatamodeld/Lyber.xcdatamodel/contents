@@ -6,7 +6,7 @@
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="tag" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
-    <entity name="Record" representedClassName="Record" syncable="YES" codeGenerationType="class">
+    <entity name="Record" representedClassName="Record" syncable="YES">
         <attribute name="company" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="dep_lat" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="dep_lng" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
@@ -19,6 +19,7 @@
         <attribute name="price_min" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="priority" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="product" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="real_price" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="time_stamp" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="user_lat" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="user_lng" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
@@ -26,6 +27,6 @@
     </entity>
     <elements>
         <element name="Place" positionX="-54" positionY="-9" width="128" height="105"/>
-        <element name="Record" positionX="-54" positionY="18" width="128" height="285"/>
+        <element name="Record" positionX="-54" positionY="18" width="128" height="300"/>
     </elements>
 </model>
