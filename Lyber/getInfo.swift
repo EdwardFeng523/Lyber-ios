@@ -12,6 +12,20 @@ import Foundation
  Contains all of the code used for parsing json http response
  **/
 
+struct LogItem: Decodable {
+    let id: String
+    let deparLat: Double
+    let deparLng: Double
+    let destLat: Double
+    let destLng: Double
+    let company: String
+    let productName: String
+    let priceMin: Double
+    let priceMax: Double
+    let eta: Int
+    let priority: String
+}
+
 struct ServerEstimate: Decodable {
     let prices: [EstimateItem]
 }

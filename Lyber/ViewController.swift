@@ -449,6 +449,48 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         let now = NSDate()
         recordToSave.time_stamp = now
         PersistenceService.saveContext()
+        
+        let parameters = ["id": "", "deparLat": recordToSave.dep_lat, "deparLng": recordToSave.dep_lng, "destLat": recordToSave.dest_lat, "destLng": recordToSave.dest_lng, "company": recordToSave.company ?? " ", "productName": recordToSave.product ?? " ", "priceMin": recordToSave.price_min, "priceMax": recordToSave.price_max, "eta": recordToSave.eta * 60, "priority": recordToSave.priority ?? ""] as [String : Any]
+        
+        postLog(log: parameters)
+        
+    }
+    
+    func postLog(log: Any) {
+        guard let url = URL(string: "https://lyber-server.herokuapp.com/log/request") else { return }
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+//        let encodedData = try? JSONEncoder().encode(log)
+        
+//        if let data = encodedData {
+//            if let httpBody = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) {
+//                print("Record JSON:\n" + String(describing: httpBody) + "\n")
+//
+//            }
+//        }
+
+        guard let httpBody = try? JSONSerialization.data(withJSONObject: log, options: []) else { return }
+        request.httpBody = httpBody
+        print ("http Body")
+        print (try? JSONSerialization.jsonObject(with: httpBody, options: []))
+        let session = URLSession.shared
+        session.dataTask(with: request) { (data, response, error) in
+            if let response = response {
+                print("-=-=-=-=")
+                print(response)
+            }
+            
+            if let data = data {
+                do {
+                    let json = try JSONSerialization.jsonObject(with: data, options: [])
+                    print(json)
+                } catch {
+                    print(error)
+                }
+            }
+            
+        }.resume()
     }
 }
 
