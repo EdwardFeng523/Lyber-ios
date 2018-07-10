@@ -28,6 +28,7 @@ struct LogItem: Decodable {
 
 struct ServerEstimate: Decodable {
     let prices: [EstimateItem]
+    let id: String
 }
 
 struct EstimateItem: Decodable {
@@ -92,6 +93,7 @@ struct LyberItem {
     let estimatedArrival: Int
     let product_id: String
     let display_name: String
+    let id: String
 }
 
 struct History {

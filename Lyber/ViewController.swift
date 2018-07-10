@@ -333,7 +333,7 @@ class ViewController: UIViewController, GMSAutocompleteViewControllerDelegate
             do {
                 let estimateInfo = try JSONDecoder().decode(ServerEstimate.self, from: estimateData)
                 for elementInfo in estimateInfo.prices {
-                    let new_item_estimate = LyberItem(company: elementInfo.company, type: lyberType(type: elementInfo.display_name), description: lyberDescription(type: elementInfo.display_name), priceRange: lyftPriceRange(low: elementInfo.min_estimate, high: elementInfo.max_estimate), high: Double(elementInfo.max_estimate), low: Double(elementInfo.min_estimate), distance: elementInfo.distance, duration: elementInfo.duration, estimatedArrival: elementInfo.eta / 60, product_id: elementInfo.product_id, display_name: elementInfo.display_name)
+                    let new_item_estimate = LyberItem(company: elementInfo.company, type: lyberType(type: elementInfo.display_name), description: lyberDescription(type: elementInfo.display_name), priceRange: lyftPriceRange(low: elementInfo.min_estimate, high: elementInfo.max_estimate), high: Double(elementInfo.max_estimate), low: Double(elementInfo.min_estimate), distance: elementInfo.distance, duration: elementInfo.duration, estimatedArrival: elementInfo.eta / 60, product_id: elementInfo.product_id, display_name: elementInfo.display_name, id: estimateInfo.id)
                     lst.append(new_item_estimate)
                 }
                 guard let from_lat = self?.fromCoord!.latitude else {return }
@@ -440,7 +440,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         recordToSave.dest_lng = (toCoord?.longitude)!
         recordToSave.dep_name = from.text!
         recordToSave.dest_name = to.text!
-        recordToSave.uuid = ""
+        recordToSave.uuid = target.id
         recordToSave.user_lat = currentLoc.coordinate.latitude
         recordToSave.user_lng = currentLoc.coordinate.longitude
         recordToSave.eta = Int32(target.estimatedArrival)
@@ -450,7 +450,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         recordToSave.time_stamp = now
         PersistenceService.saveContext()
         
-        let parameters = ["id": "", "deparLat": recordToSave.dep_lat, "deparLng": recordToSave.dep_lng, "destLat": recordToSave.dest_lat, "destLng": recordToSave.dest_lng, "company": recordToSave.company ?? " ", "productName": recordToSave.product ?? " ", "priceMin": recordToSave.price_min, "priceMax": recordToSave.price_max, "eta": recordToSave.eta * 60, "priority": recordToSave.priority ?? ""] as [String : Any]
+        let parameters = ["id": recordToSave.uuid ?? "", "deparLat": recordToSave.dep_lat, "deparLng": recordToSave.dep_lng, "destLat": recordToSave.dest_lat, "destLng": recordToSave.dest_lng, "company": recordToSave.company ?? " ", "productName": recordToSave.product ?? " ", "priceMin": recordToSave.price_min, "priceMax": recordToSave.price_max, "eta": recordToSave.eta * 60, "priority": recordToSave.priority ?? ""] as [String : Any]
         
         postLog(log: parameters)
         
