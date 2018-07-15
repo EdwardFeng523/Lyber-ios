@@ -87,7 +87,7 @@
                                 </subviews>
                             </stackView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="9lp-3e-HXU">
-                                <rect key="frame" x="10" y="220" width="355" height="405"/>
+                                <rect key="frame" x="10" y="218" width="355" height="405"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="405" id="WOo-0g-bRp"/>
@@ -97,7 +97,7 @@
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="History" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3aL-YF-eeL">
-                                            <rect key="frame" x="156" y="12" width="55" height="21"/>
+                                            <rect key="frame" x="150" y="12" width="55" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -105,7 +105,7 @@
                                     </subviews>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
-                                        <constraint firstItem="3aL-YF-eeL" firstAttribute="leading" secondItem="9fr-pc-b6i" secondAttribute="leading" constant="156" id="SHn-2y-wVo"/>
+                                        <constraint firstItem="3aL-YF-eeL" firstAttribute="centerX" secondItem="9fr-pc-b6i" secondAttribute="centerX" id="SHn-2y-wVo"/>
                                         <constraint firstItem="3aL-YF-eeL" firstAttribute="centerY" secondItem="9fr-pc-b6i" secondAttribute="centerY" id="vCv-dE-bu8"/>
                                     </constraints>
                                 </view>
@@ -188,7 +188,7 @@
                             <constraint firstItem="6Jw-uB-ZdJ" firstAttribute="centerY" secondItem="lQZ-wT-NFE" secondAttribute="centerY" constant="-255" id="424-jD-pRm"/>
                             <constraint firstItem="Ptc-JY-WwG" firstAttribute="centerY" secondItem="lQZ-wT-NFE" secondAttribute="centerY" constant="-175" id="9Cq-m0-sOe"/>
                             <constraint firstItem="6Jw-uB-ZdJ" firstAttribute="centerX" secondItem="lQZ-wT-NFE" secondAttribute="centerX" constant="-80" id="9T5-xZ-pyy"/>
-                            <constraint firstItem="9lp-3e-HXU" firstAttribute="top" secondItem="lQZ-wT-NFE" secondAttribute="top" constant="200" id="BeU-ko-u3S"/>
+                            <constraint firstItem="9lp-3e-HXU" firstAttribute="top" secondItem="lQZ-wT-NFE" secondAttribute="bottom" constant="-400" id="BeU-ko-u3S"/>
                             <constraint firstItem="Ptc-JY-WwG" firstAttribute="centerX" secondItem="lQZ-wT-NFE" secondAttribute="centerX" constant="-15" id="e0Q-Ly-rZR"/>
                             <constraint firstItem="5Y6-8S-6lq" firstAttribute="centerX" secondItem="lQZ-wT-NFE" secondAttribute="centerX" constant="-15" id="ga1-Yf-tlh"/>
                             <constraint firstItem="9lp-3e-HXU" firstAttribute="leading" secondItem="lQZ-wT-NFE" secondAttribute="leading" constant="10" id="nnm-kv-WM3"/>
