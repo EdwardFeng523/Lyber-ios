@@ -37,9 +37,9 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>Please let Lyber use your location :)</string>
+	<string>Your current location will be displayed on the map and used for quickly setting departure place for requesting rides.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Please let Lyber use your location :)</string>
+	<string>Your current location will be displayed on the map and used for quickly setting departure place for requesting rides.</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
