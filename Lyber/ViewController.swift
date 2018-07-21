@@ -488,6 +488,9 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
 // As an extension for CLLocationManagerDelegate
 extension ViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if currentLoc.coordinate.latitude == 0 && currentLoc.coordinate.longitude == 0 {
+            (self.view.subviews[0] as? GMSMapView)?.animate(toLocation: locations[0].coordinate)
+        }
         currentLoc = locations[0]
     }
 }
