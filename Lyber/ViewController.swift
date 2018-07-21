@@ -279,6 +279,8 @@ class ViewController: UIViewController, GMSAutocompleteViewControllerDelegate
             print(response.data as Any)     // server data
             print(response.result as Any)   // result of response serialization
             
+            print("[line 282]: " + origin)
+            
             do {
                 let json = try JSON(data: response.data!)
                 let routes = json["routes"].arrayValue
@@ -290,14 +292,17 @@ class ViewController: UIViewController, GMSAutocompleteViewControllerDelegate
                 // print route using Polyline
                 for route in routes
                 {
-                    let routeOverviewPolyline = route["overview_polyline"].dictionary
-                    let points = routeOverviewPolyline?["points"]?.stringValue
-                    let path = GMSPath.init(fromEncodedPath: points!)
-                    let polyline = GMSPolyline.init(path: path)
-                    polyline.strokeWidth = 4
-                    polyline.strokeColor = UIColor.black
-                    polyline.map = self.mapView
-                    self.polylines.append(polyline)
+                    DispatchQueue.main.async {
+                        let routeOverviewPolyline = route["overview_polyline"].dictionary
+                        let points = routeOverviewPolyline?["points"]?.stringValue
+                        let path = GMSPath.init(fromEncodedPath: points!)
+                        let polyline = GMSPolyline.init(path: path)
+                        polyline.strokeWidth = 4
+                        polyline.strokeColor = UIColor.black
+                        polyline.map = self.mapView
+                        self.polylines.append(polyline)
+                        print ("set one line")
+                    }
                 }
             } catch {
                 print ("error drawing route")
@@ -323,6 +328,9 @@ class ViewController: UIViewController, GMSAutocompleteViewControllerDelegate
     func sendRequest(depar_lat: String, depar_lng: String, dest_lat: String, dest_lng: String) {
         let jsonUrlStringEstimate = "https://lyber.co/api/estimate?depar_lat=" + depar_lat + "&depar_lng=" + depar_lng + "&dest_lat=" + dest_lat + "&dest_lng=" + dest_lng
         
+        
+        print("line 323, http request: " + jsonUrlStringEstimate)
+        
         guard let urlEstimate = URL(string: jsonUrlStringEstimate) else { return }
         
         var lst: [LyberItem] = []
@@ -333,7 +341,7 @@ class ViewController: UIViewController, GMSAutocompleteViewControllerDelegate
             do {
                 let estimateInfo = try JSONDecoder().decode(ServerEstimate.self, from: estimateData)
                 for elementInfo in estimateInfo.prices {
-                    let new_item_estimate = LyberItem(company: elementInfo.company, type: lyberType(type: elementInfo.display_name), description: lyberDescription(type: elementInfo.display_name), priceRange: lyftPriceRange(low: elementInfo.min_estimate, high: elementInfo.max_estimate), high: Double(elementInfo.max_estimate), low: Double(elementInfo.min_estimate), distance: elementInfo.distance, duration: elementInfo.duration, estimatedArrival: elementInfo.eta / 60, product_id: elementInfo.product_id, display_name: elementInfo.display_name, id: estimateInfo.id)
+                    let new_item_estimate = LyberItem(company: elementInfo.company, type: lyberType(type: elementInfo.display_name), description: lyberDescription(type: elementInfo.display_name), priceRange: lyftPriceRange(low: elementInfo.min_estimate, high: elementInfo.max_estimate), high: Double(elementInfo.max_estimate), low: Double(elementInfo.min_estimate), distance: elementInfo.distance, duration: elementInfo.duration, estimatedArrival: elementInfo.eta != nil ? (elementInfo.eta! / 60) : 999, product_id: elementInfo.product_id, display_name: elementInfo.display_name, id: estimateInfo.id)
                     lst.append(new_item_estimate)
                 }
                 guard let from_lat = self?.fromCoord!.latitude else {return }
