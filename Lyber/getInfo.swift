@@ -35,8 +35,8 @@ struct EstimateItem: Decodable {
     let company: String
     let display_name: String
     let product_id: String
-    let max_estimate: Int
-    let min_estimate: Int
+    let max_estimate: Int?
+    let min_estimate: Int?
     let distance: Double
     let duration: Int
     let currency_code: String

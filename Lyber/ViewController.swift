@@ -329,40 +329,38 @@ class ViewController: UIViewController, GMSAutocompleteViewControllerDelegate
         let jsonUrlStringEstimate = "https://lyber.co/api/estimate?depar_lat=" + depar_lat + "&depar_lng=" + depar_lng + "&dest_lat=" + dest_lat + "&dest_lng=" + dest_lng
         
         
-        print("line 323, http request: " + jsonUrlStringEstimate)
-        
-        guard let urlEstimate = URL(string: jsonUrlStringEstimate) else { return }
-        
+        // The code using alamofire
         var lst: [LyberItem] = []
         
         spinner.startAnimating()
-        URLSession.shared.dataTask(with: urlEstimate) { [weak self] (data, response, err) in
-            guard let estimateData = data else { return }
+        Alamofire.request(jsonUrlStringEstimate).responseJSON { response in
             do {
-                let estimateInfo = try JSONDecoder().decode(ServerEstimate.self, from: estimateData)
-                for elementInfo in estimateInfo.prices {
-                    let new_item_estimate = LyberItem(company: elementInfo.company, type: lyberType(type: elementInfo.display_name), description: lyberDescription(type: elementInfo.display_name), priceRange: lyftPriceRange(low: elementInfo.min_estimate, high: elementInfo.max_estimate), high: Double(elementInfo.max_estimate), low: Double(elementInfo.min_estimate), distance: elementInfo.distance, duration: elementInfo.duration, estimatedArrival: elementInfo.eta != nil ? (elementInfo.eta! / 60) : 999, product_id: elementInfo.product_id, display_name: elementInfo.display_name, id: estimateInfo.id)
-                    lst.append(new_item_estimate)
+                let json = try JSON(data: response.data!)
+                let priceItems = json["prices"].arrayValue
+                for item in priceItems {
+                    let new_estimate = LyberItem(company: item["company"].stringValue, type: item["display_name"].stringValue, description: lyberDescription(type: item["display_name"].stringValue), priceRange: lyftPriceRange(low: item["min_estimate"].int != nil ? item["min_estimate"].int! : 999, high: item["max_estimate"].int != nil ? item["max_estimate"].int! : 999), high: item["max_estimate"].double != nil ? item["max_estimate"].double! : 999, low: item["min_estimate"].double != nil ? item["min_estimate"].double! : 999, distance: item["distance"].doubleValue, duration: item["duration"].intValue, estimatedArrival: item["eta"].intValue, product_id: item["product_id"].stringValue, display_name: item["display_name"].stringValue, id: json["id"].stringValue)
+                    lst.append(new_estimate)
                 }
-                guard let from_lat = self?.fromCoord!.latitude else {return }
-                guard let from_lng = self?.fromCoord!.longitude else {return }
-                guard let to_lat = self?.toCoord!.latitude else {return }
-                guard let to_lng = self?.toCoord!.longitude else {return }
+                let from_lat = self.fromCoord!.latitude
+                let from_lng = self.fromCoord!.longitude
+                let to_lat = self.toCoord!.latitude
+                let to_lng = self.toCoord!.longitude
                 if (String(from_lat) == depar_lat
                     && String(to_lat) == dest_lat
                     && String(from_lng) == depar_lng
-                    && String(to_lng) == dest_lng) {
+                    && String(to_lng) == dest_lng)
+                {
                     DispatchQueue.main.async {
                         // Go back to the main queue to update the gui.
-                        self?.items = lst
-                        self?.sortByPrice(lst)
-                        self?.sortedByTime = false
+                        self.items = lst
+                        self.sortByPrice(lst)
+                        self.sortedByTime = false
                     }
                 }
-            } catch let jsonErr {
-                print ("Error serializing json Estimate:", jsonErr)
+            } catch {
+                
             }
-        }.resume()
+        }
         
     }
     
