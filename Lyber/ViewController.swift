@@ -326,7 +326,7 @@ class ViewController: UIViewController, GMSAutocompleteViewControllerDelegate
     
     // Do the two http requests.
     func sendRequest(depar_lat: String, depar_lng: String, dest_lat: String, dest_lng: String) {
-        let jsonUrlStringEstimate = "https://lyber.co/api/estimate?depar_lat=" + depar_lat + "&depar_lng=" + depar_lng + "&dest_lat=" + dest_lat + "&dest_lng=" + dest_lng
+        let jsonUrlStringEstimate = "https://lyber.co/api/estimate/beta?depar_lat=" + depar_lat + "&depar_lng=" + depar_lng + "&dest_lat=" + dest_lat + "&dest_lng=" + dest_lng
         
         
         // The code using alamofire
