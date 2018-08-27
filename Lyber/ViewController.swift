@@ -344,8 +344,13 @@ class ViewController: UIViewController, GMSAutocompleteViewControllerDelegate
                 let priceItems = json["prices"].arrayValue
                 for item in priceItems {
                     print ("fare estimate = ", item["fare_estimate"])
-                    let new_estimate = LyberItem(company: item["company"].stringValue, type: item["display_name"].stringValue, description: lyberDescription(type: item["display_name"].stringValue), priceRange: lyftPriceRange(low: item["min_estimate"].int != nil ? item["min_estimate"].int! : 999, high: item["max_estimate"].int != nil ? item["max_estimate"].int! : 999), high: item["max_estimate"].double != nil ? item["max_estimate"].double! : 999, low: item["min_estimate"].double != nil ? item["min_estimate"].double! : 999, distance: item["distance"].doubleValue, duration: item["duration"].intValue, estimatedArrival: item["eta"].intValue / 60, product_id: item["product_id"].stringValue, display_name: item["display_name"].stringValue, id: json["id"].stringValue, fare_estimate: item["fare_estimate"].double != nil ? )
+                    if (item["fare_estimate"] == JSON.null) {
+                        self.sendRequest(depar_lat: depar_lat, depar_lng: depar_lng, dest_lat: dest_lat, dest_lng: dest_lng)
+                        return
+                    }
+                    let new_estimate = LyberItem(company: item["company"].stringValue, type: item["display_name"].stringValue, description: lyberDescription(type: item["display_name"].stringValue), priceRange: lyftPriceRange(low: item["min_estimate"].int != nil ? item["min_estimate"].int! : 999, high: item["max_estimate"].int != nil ? item["max_estimate"].int! : 999), high: item["max_estimate"].double != nil ? item["max_estimate"].double! : 999, low: item["min_estimate"].double != nil ? item["min_estimate"].double! : 999, distance: item["distance"].doubleValue, duration: item["duration"].intValue, estimatedArrival: item["eta"].intValue / 60, product_id: item["product_id"].stringValue, display_name: item["display_name"].stringValue, id: json["id"].stringValue, fare_estimate: item["fare_estimate"].double != nil ? item["fare_estimate"].double! : -1.0)
                     lst.append(new_estimate)
+                    print ("fare estimate = ", new_estimate.fare_estimate)
                 }
                 let from_lat = self.fromCoord!.latitude
                 let from_lng = self.fromCoord!.longitude
@@ -415,7 +420,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         
         cell.iconDisplay.image = items[indexPath.row].company == "uber" ? UIImage(named: "uberIcon") : UIImage(named: "lyftIcon")
         
-        cell.priceRange.text = items[indexPath.row].priceRange
+        cell.priceRange.text = "$" + String(items[indexPath.row].fare_estimate)
         return cell
     }
     
