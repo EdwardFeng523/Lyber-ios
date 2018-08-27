@@ -94,6 +94,7 @@ struct LyberItem {
     let product_id: String
     let display_name: String
     let id: String
+    let fare_estimate: Double
 }
 
 struct History {

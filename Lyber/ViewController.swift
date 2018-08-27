@@ -42,6 +42,10 @@ class ViewController: UIViewController, GMSAutocompleteViewControllerDelegate
         }
     }
     
+    var fromID: String? = nil
+    
+    var toID: String? = nil
+    
     var toCoord: CLLocationCoordinate2D? = nil
     {
         didSet{
@@ -326,8 +330,9 @@ class ViewController: UIViewController, GMSAutocompleteViewControllerDelegate
     
     // Do the two http requests.
     func sendRequest(depar_lat: String, depar_lng: String, dest_lat: String, dest_lng: String) {
-        let jsonUrlStringEstimate = "https://lyber.co/api/estimate/beta?depar_lat=" + depar_lat + "&depar_lng=" + depar_lng + "&dest_lat=" + dest_lat + "&dest_lng=" + dest_lng
+        let jsonUrlStringEstimate = "https://lyber.co/api/estimate/beta?depar_lat=" + depar_lat + "&depar_lng=" + depar_lng + "&dest_lat=" + dest_lat + "&dest_lng=" + dest_lng + "&dest_ref=" + toID!
         
+        print ("url: " + jsonUrlStringEstimate)
         
         // The code using alamofire
         var lst: [LyberItem] = []
@@ -338,7 +343,8 @@ class ViewController: UIViewController, GMSAutocompleteViewControllerDelegate
                 let json = try JSON(data: response.data!)
                 let priceItems = json["prices"].arrayValue
                 for item in priceItems {
-                    let new_estimate = LyberItem(company: item["company"].stringValue, type: item["display_name"].stringValue, description: lyberDescription(type: item["display_name"].stringValue), priceRange: lyftPriceRange(low: item["min_estimate"].int != nil ? item["min_estimate"].int! : 999, high: item["max_estimate"].int != nil ? item["max_estimate"].int! : 999), high: item["max_estimate"].double != nil ? item["max_estimate"].double! : 999, low: item["min_estimate"].double != nil ? item["min_estimate"].double! : 999, distance: item["distance"].doubleValue, duration: item["duration"].intValue, estimatedArrival: item["eta"].intValue / 60, product_id: item["product_id"].stringValue, display_name: item["display_name"].stringValue, id: json["id"].stringValue)
+                    print ("fare estimate = ", item["fare_estimate"])
+                    let new_estimate = LyberItem(company: item["company"].stringValue, type: item["display_name"].stringValue, description: lyberDescription(type: item["display_name"].stringValue), priceRange: lyftPriceRange(low: item["min_estimate"].int != nil ? item["min_estimate"].int! : 999, high: item["max_estimate"].int != nil ? item["max_estimate"].int! : 999), high: item["max_estimate"].double != nil ? item["max_estimate"].double! : 999, low: item["min_estimate"].double != nil ? item["min_estimate"].double! : 999, distance: item["distance"].doubleValue, duration: item["duration"].intValue, estimatedArrival: item["eta"].intValue / 60, product_id: item["product_id"].stringValue, display_name: item["display_name"].stringValue, id: json["id"].stringValue, fare_estimate: item["fare_estimate"].double != nil ? )
                     lst.append(new_estimate)
                 }
                 let from_lat = self.fromCoord!.latitude
@@ -370,11 +376,13 @@ class ViewController: UIViewController, GMSAutocompleteViewControllerDelegate
             DispatchQueue.main.async { [weak self] in
                 self?.from.text = place.name
                 self?.fromCoord = place.coordinate
+                self?.fromID = place.placeID
             }
         } else {
             DispatchQueue.main.async { [weak self] in
                 self?.to.text = place.name
                 self?.toCoord = place.coordinate
+                self?.toID = place.placeID
             }
         }
         fromPressed = false
