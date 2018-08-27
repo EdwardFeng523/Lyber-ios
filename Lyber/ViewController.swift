@@ -248,11 +248,19 @@ class ViewController: UIViewController, GMSAutocompleteViewControllerDelegate
     
     @IBAction func sortByPrice(_ sender: Any) {
         items.sort { (itemA, itemB) -> Bool in
-            if (itemA.low != itemB.low) {
-                return itemA.low < itemB.low
+            let comparatorA: Double
+            let comparatorB: Double
+            if (itemA.fare_estimate != -1.0) {
+                comparatorA = itemA.fare_estimate
             } else {
-                return itemA.high < itemB.high
+                comparatorA = (itemA.low + itemA.high) / 2
             }
+            if (itemB.fare_estimate != -1.0) {
+                comparatorB = itemB.fare_estimate
+            } else {
+                comparatorB = (itemB.low + itemB.high) / 2
+            }
+            return comparatorA < comparatorB
         }
         displayTable.reloadData()
         sortedByTime = false
@@ -324,12 +332,12 @@ class ViewController: UIViewController, GMSAutocompleteViewControllerDelegate
             alert.addAction(action)
             present(alert, animated: true, completion: nil)
         } else {
-            sendRequest(depar_lat: String(fromCoord!.latitude), depar_lng: String(fromCoord!.longitude), dest_lat: String(toCoord!.latitude), dest_lng: String(toCoord!.longitude))
+            sendRequest(depar_lat: String(fromCoord!.latitude), depar_lng: String(fromCoord!.longitude), dest_lat: String(toCoord!.latitude), dest_lng: String(toCoord!.longitude), cnt: 0)
         }
     }
     
     // Do the two http requests.
-    func sendRequest(depar_lat: String, depar_lng: String, dest_lat: String, dest_lng: String) {
+    func sendRequest(depar_lat: String, depar_lng: String, dest_lat: String, dest_lng: String, cnt: Int) {
         let jsonUrlStringEstimate = "https://lyber.co/api/estimate/beta?depar_lat=" + depar_lat + "&depar_lng=" + depar_lng + "&dest_lat=" + dest_lat + "&dest_lng=" + dest_lng + "&dest_ref=" + toID!
         
         print ("url: " + jsonUrlStringEstimate)
@@ -344,8 +352,8 @@ class ViewController: UIViewController, GMSAutocompleteViewControllerDelegate
                 let priceItems = json["prices"].arrayValue
                 for item in priceItems {
                     print ("fare estimate = ", item["fare_estimate"])
-                    if (item["fare_estimate"] == JSON.null) {
-                        self.sendRequest(depar_lat: depar_lat, depar_lng: depar_lng, dest_lat: dest_lat, dest_lng: dest_lng)
+                    if (item["fare_estimate"] == JSON.null && cnt < 5) {
+                        self.sendRequest(depar_lat: depar_lat, depar_lng: depar_lng, dest_lat: dest_lat, dest_lng: dest_lng, cnt: cnt + 1)
                         return
                     }
                     let new_estimate = LyberItem(company: item["company"].stringValue, type: item["display_name"].stringValue, description: lyberDescription(type: item["display_name"].stringValue), priceRange: lyftPriceRange(low: item["min_estimate"].int != nil ? item["min_estimate"].int! : 999, high: item["max_estimate"].int != nil ? item["max_estimate"].int! : 999), high: item["max_estimate"].double != nil ? item["max_estimate"].double! : 999, low: item["min_estimate"].double != nil ? item["min_estimate"].double! : 999, distance: item["distance"].doubleValue, duration: item["duration"].intValue, estimatedArrival: item["eta"].intValue / 60, product_id: item["product_id"].stringValue, display_name: item["display_name"].stringValue, id: json["id"].stringValue, fare_estimate: item["fare_estimate"].double != nil ? item["fare_estimate"].double! : -1.0)
@@ -420,7 +428,12 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         
         cell.iconDisplay.image = items[indexPath.row].company == "uber" ? UIImage(named: "uberIcon") : UIImage(named: "lyftIcon")
         
-        cell.priceRange.text = "$" + String(items[indexPath.row].fare_estimate)
+        if (items[indexPath.row].fare_estimate != -1.0) {
+            cell.priceRange.text = "$" + String(format: "%.2f", items[indexPath.row].fare_estimate)
+        } else {
+            cell.priceRange.text = items[indexPath.row].priceRange
+        }
+        
         return cell
     }
     
