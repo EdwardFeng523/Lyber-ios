@@ -352,7 +352,7 @@ class ViewController: UIViewController, GMSAutocompleteViewControllerDelegate
                 let priceItems = json["prices"].arrayValue
                 for item in priceItems {
                     print ("fare estimate = ", item["fare_estimate"])
-                    if (item["fare_estimate"] == JSON.null && cnt < 5) {
+                    if (item["fare_estimate"] == JSON.null && cnt < 8) {
                         self.sendRequest(depar_lat: depar_lat, depar_lng: depar_lng, dest_lat: dest_lat, dest_lng: dest_lng, cnt: cnt + 1)
                         return
                     }
