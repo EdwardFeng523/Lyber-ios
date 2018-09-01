@@ -155,6 +155,7 @@ class ViewController: UIViewController, GMSAutocompleteViewControllerDelegate
             
         } else {
             from.text = result[0].name
+            fromID = result[0].id
             fromCoord = CLLocationCoordinate2D(latitude: result[0].lat, longitude: result[0].lng)
         }
     }
@@ -165,6 +166,7 @@ class ViewController: UIViewController, GMSAutocompleteViewControllerDelegate
             
         } else {
             from.text = result[0].name
+            fromID = result[0].id
             fromCoord = CLLocationCoordinate2D(latitude: result[0].lat, longitude: result[0].lng)
         }
     }
@@ -175,6 +177,7 @@ class ViewController: UIViewController, GMSAutocompleteViewControllerDelegate
             
         } else {
             to.text = result[0].name
+            toID = result[0].id
             toCoord = CLLocationCoordinate2D(latitude: result[0].lat, longitude: result[0].lng)
         }
     }
@@ -185,6 +188,7 @@ class ViewController: UIViewController, GMSAutocompleteViewControllerDelegate
             
         } else {
             to.text = result[0].name
+            toID = result[0].id
             toCoord = CLLocationCoordinate2D(latitude: result[0].lat, longitude: result[0].lng)
         }
     }

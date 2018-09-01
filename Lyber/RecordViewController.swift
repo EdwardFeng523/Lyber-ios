@@ -90,6 +90,7 @@ class RecordViewController: UIViewController, GMSAutocompleteViewControllerDeleg
                 let placeToSave = Place(context: PersistenceService.context)
                 placeToSave.tag = "blue"
                 placeToSave.name = place.name
+                placeToSave.id = place.placeID
                 placeToSave.lat = Double(place.coordinate.latitude)
                 placeToSave.lng = Double(place.coordinate.longitude)
                 PersistenceService.saveContext()
@@ -102,6 +103,7 @@ class RecordViewController: UIViewController, GMSAutocompleteViewControllerDeleg
                 let placeToSave = Place(context: PersistenceService.context)
                 placeToSave.tag = "red"
                 placeToSave.name = place.name
+                placeToSave.id = place.placeID
                 placeToSave.lat = Double(place.coordinate.latitude)
                 placeToSave.lng = Double(place.coordinate.longitude)
                 PersistenceService.saveContext()
